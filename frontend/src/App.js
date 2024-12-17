@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
 import CypherForm from './components/CypherForm';
 import ResultsTable from './components/ResultsTable';
+import "./App.css";
 
 function App() {
-  const [results, setResults] = useState([]); // To store the results from Cypher query
+  const [results, setResults] = useState([]);
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <h1>Cypher Console</h1>
-      <p>Enter your Cypher query below and submit:</p>
-
-      {/* Cypher Form */}
-      <CypherForm setResults={setResults} />
-
-      {/* Results Table */}
-      <ResultsTable results={results} />
-    </div>
+      <div>
+          <h1>Neo4j Cypher Query Console</h1>
+          <CypherForm setResults={setResults} />
+          <ResultsTable results={results} />
+      </div>
   );
 }
 
