@@ -3,6 +3,7 @@ import '../App.css';
 
 const CypherEditor = ({ setResults }) => {
   const [query, setQuery] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [cursorPosition, setCursorPosition] = useState(0);
   const [focusedIndex, setFocusedIndex] = useState(-1); // Tracks the focused suggestion
@@ -14,6 +15,11 @@ const CypherEditor = ({ setResults }) => {
     relationships: ['PROVIDE', 'RELATED', 'PART_OF', "HAS_STYLE", "FOUND_IN", "BOUGHT_INTERESTED", "CONTACT"],
     operators: ['AND', 'OR', 'NOT', 'XOR', 'IN', 'CONTAINS', 'STARTS WITH', 'ENDS WITH'],
     properties: ['name', 'id', 'price', 'category', 'description']
+  };
+
+  const predefinedQueries = {
+    produs: "MATCH (p:Produs) RETURN p.name, p.price",
+    furnizor: "MATCH (f:Furnizor) RETURN f.name, f.location"
   };
 
   const getAllKeywords = () => {
@@ -126,15 +132,51 @@ const CypherEditor = ({ setResults }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+        const response = await fetch('http://localhost:8080/api/cypher/execute', {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain' },
+            body: query
+        });
+
+        if (!response.ok) { // Check for HTTP errors (status not in the 200-299 range)
+            const errorData = await response.json(); // Parse the JSON error response
+            throw new Error(errorData.message || 'Error executing query'); // Throw an error with the message
+        }
+
+        const data = await response.json();
+        setResults(data);
+        setErrorMessage(''); // Clear any previous errors
+
+    } catch (error) {
+        console.error('Error executing query:', error);
+        setErrorMessage(error.message); // Set the error message
+        setResults([{ error: error.message }]); // Display the error message to the user
+    }
+  };
+
+  const executePredefinedQuery = async (queryType) => {
+    const selectedQuery = predefinedQueries[queryType];
+    if (!selectedQuery) return;
+    
+    try {
       const response = await fetch('http://localhost:8080/api/cypher/execute', {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain' },
-        body: query
+        body: selectedQuery
       });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `Error executing ${queryType} query`);
+      }
+      
       const data = await response.json();
       setResults(data);
+      setErrorMessage(''); // Clear any previous errors
+      
     } catch (error) {
-      console.error('Error executing query:', error);
+      console.error(`Error executing ${queryType} query:`, error);
+      setErrorMessage(error.message); // Set the error message
       setResults([{ error: error.message }]);
     }
   };
@@ -181,14 +223,52 @@ const CypherEditor = ({ setResults }) => {
                   onMouseLeave={() => setFocusedIndex(-1)}
                 >
                   {suggestion}
+                  
                 </div>
               ))}
             </div>
+
+            
+            
           )}
+          {errorMessage && (
+          <div 
+            className="error-message"
+            style={{
+              color: '#ff3333',
+              backgroundColor: '#ffeeee',
+              padding: '8px 12px',
+              borderRadius: '4px',
+              marginBottom: '10px',
+              fontSize: '14px',
+              border: '1px solid #ffcccc'
+            }}
+          >
+            <strong>Error:</strong> {errorMessage}
+          </div>
+        )}
         </div>
+        <div style={{ display: 'flex' }}>
         <button type="submit" className="execute-button">
           Execute Query
+          
         </button>
+        <button 
+            type="button" 
+            className="execute-button" 
+            onClick={() => executePredefinedQuery('furnizor')}
+          >
+            Load Suppliers
+          </button>
+
+          <button 
+            type="button" 
+            className="execute-button" 
+            onClick={() => executePredefinedQuery('produs')}
+          >
+            Load Products
+          </button>
+          </div>
       </form>
     </div>
   );
