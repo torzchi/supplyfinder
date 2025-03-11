@@ -1,25 +1,110 @@
 import React, { useState, useRef } from 'react';
-import '../App.css';
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Paper,
+  Alert,
+  Popper,
+  List,
+  ListItem,
+  ListItemText,
+  Chip,
+  ButtonGroup,
+  Tooltip,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Card,
+  CardContent,
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import StorageIcon from '@mui/icons-material/Storage';
+import CodeIcon from '@mui/icons-material/Code';
 
-const CypherEditor = ({ setResults }) => {
+// ... (all your styled components stay the same)
+
+const ContentContainer = styled(Box)(({ theme }) => ({
+  marginLeft: '250px', // Match sidebar width
+  display: 'flex',
+  flexDirection: 'column',
+  height: '100vh',
+  width: 'calc(100% - 250px)',
+  backgroundColor: theme.palette.background.default,
+}));
+
+const EditorWrapper = styled(Paper)(({ theme }) => ({
+  margin: theme.spacing(2),
+  padding: theme.spacing(2),
+  flexGrow: 1,
+  position: 'relative',
+  display: 'flex',
+  flexDirection: 'column',
+}));
+
+const StyledTextarea = styled(TextField)(({ theme }) => ({
+  fontFamily: 'monospace',
+  fontSize: '16px',
+  '& .MuiInputBase-root': {
+    fontFamily: 'monospace',
+  },
+}));
+
+const SuggestionsList = styled(Paper)(({ theme }) => ({
+  maxHeight: '200px',
+  overflow: 'auto',
+  zIndex: 1500,
+}));
+
+const KeywordChip = styled(Chip)(({ theme }) => ({
+  margin: theme.spacing(0.5),
+  height: '24px',
+}));
+
+const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
+  maxHeight: '400px',
+  marginTop: theme.spacing(2),
+}));
+
+const formatCellValue = (value) => {
+  if (value === null || value === undefined) return '—';
+  if (typeof value === 'object') {
+    try {
+      return JSON.stringify(value, null, 2);
+    } catch (e) {
+      return String(value);
+    }
+  }
+  return String(value);
+};
+
+const CypherForm = () => {
   const [query, setQuery] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
   const [cursorPosition, setCursorPosition] = useState(0);
-  const [focusedIndex, setFocusedIndex] = useState(-1); // Tracks the focused suggestion
-  const textAreaRef = useRef(null);
+  const [focusedIndex, setFocusedIndex] = useState(-1);
+  const [results, setResults] = useState(null);
+  const [successMessage, setSuccessMessage] = useState('');
+  const textFieldRef = useRef(null);
 
   const keywords = {
     commands: ['MATCH', 'CREATE', 'RETURN', 'WHERE', 'DELETE', 'SET', 'MERGE', 'WITH', 'ORDER BY', 'SKIP', 'LIMIT'],
-    nodes: ['Produs', 'Furnizor', 'Client', "Incapere", "Locatie", "Stil"],
-    relationships: ['PROVIDE', 'RELATED', 'PART_OF', "HAS_STYLE", "FOUND_IN", "BOUGHT_INTERESTED", "CONTACT"],
+    nodes: ['Produs', 'Furnizor', 'Client', 'Incapere', 'Locatie', 'Stil'],
+    relationships: ['PROVIDE', 'RELATED', 'PART_OF', 'HAS_STYLE', 'FOUND_IN', 'BOUGHT_INTERESTED', 'CONTACT'],
     operators: ['AND', 'OR', 'NOT', 'XOR', 'IN', 'CONTAINS', 'STARTS WITH', 'ENDS WITH'],
-    properties: ['name', 'id', 'price', 'category', 'description']
+    properties: ['name', 'id', 'price', 'category', 'description'],
   };
 
   const predefinedQueries = {
-    produs: "MATCH (p:Produs) RETURN p.name, p.price",
-    furnizor: "MATCH (f:Furnizor) RETURN f.name, f.location"
+    produs: 'MATCH (p:Produs) RETURN DISTINCT p.name, p.price',
+    furnizor: 'MATCH (f:Furnizor) RETURN DISTINCT f.name, f.location',
   };
 
   const getAllKeywords = () => {
@@ -28,7 +113,7 @@ const CypherEditor = ({ setResults }) => {
       ...keywords.nodes,
       ...keywords.relationships,
       ...keywords.operators,
-      ...keywords.properties
+      ...keywords.properties,
     ];
   };
 
@@ -36,12 +121,10 @@ const CypherEditor = ({ setResults }) => {
     let start = position;
     let end = position;
 
-    // Find start of current word
     while (start > 0 && !/[\s(){}[\],;:."]/.test(text[start - 1])) {
       start--;
     }
 
-    // Find end of current word
     while (end < text.length && !/[\s(){}[\],;:."]/.test(text[end])) {
       end++;
     }
@@ -62,6 +145,7 @@ const CypherEditor = ({ setResults }) => {
 
     if (!currentWord || currentWord.length < 1) {
       setSuggestions([]);
+      setAnchorEl(null);
       return;
     }
 
@@ -75,37 +159,38 @@ const CypherEditor = ({ setResults }) => {
     }
 
     const filtered = relevantKeywords
-      .filter(keyword => 
-        keyword.toLowerCase().startsWith(currentWord.toLowerCase())
-      )
+      .filter((keyword) => keyword.toLowerCase().startsWith(currentWord.toLowerCase()))
       .slice(0, 5);
 
+    if (filtered.length > 0 && textFieldRef.current) {
+      setAnchorEl(textFieldRef.current);
+    } else {
+      setAnchorEl(null);
+    }
+
     setSuggestions(filtered);
-    setFocusedIndex(-1); // Reset focused index when suggestions update
+    setFocusedIndex(-1);
   };
 
   const applySuggestion = (suggestion) => {
     const { start, end } = getCurrentWordBoundaries(query, cursorPosition);
-
-    // Preserve text before and after the current word
     const beforeWord = query.slice(0, start);
     const afterWord = query.slice(end);
-
-    // Create new query with the suggestion
     const newQuery = beforeWord + suggestion + afterWord;
     setQuery(newQuery);
     setSuggestions([]);
-
-    // Calculate new cursor position
+    setAnchorEl(null);
     const newPosition = start + suggestion.length;
     setCursorPosition(newPosition);
 
-    // Update textarea cursor position
-    if (textAreaRef.current) {
-      textAreaRef.current.focus();
-      setTimeout(() => {
-        textAreaRef.current.setSelectionRange(newPosition, newPosition);
-      }, 0);
+    if (textFieldRef.current) {
+      textFieldRef.current.focus();
+      const input = textFieldRef.current.querySelector('textarea');
+      if (input) {
+        setTimeout(() => {
+          input.setSelectionRange(newPosition, newPosition);
+        }, 0);
+      }
     }
   };
 
@@ -120,158 +205,215 @@ const CypherEditor = ({ setResults }) => {
       } else if (e.key === 'Enter' && focusedIndex !== -1) {
         e.preventDefault();
         applySuggestion(suggestions[focusedIndex]);
+      } else if (e.key === 'Tab') {
+        e.preventDefault();
+        applySuggestion(suggestions[focusedIndex !== -1 ? focusedIndex : 0]);
+      } else if (e.key === 'Escape') {
+        setSuggestions([]);
+        setAnchorEl(null);
       }
-    }
-
-    if (e.key === 'Tab' && suggestions.length > 0) {
-      e.preventDefault();
-      applySuggestion(suggestions[0]);
     }
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
+    setSuccessMessage('');
+    setErrorMessage('');
+    
     try {
-        const response = await fetch('http://localhost:8080/api/cypher/execute', {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain' },
-            body: query
-        });
+      const response = await fetch('http://localhost:8080/api/cypher/execute', {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: query,
+      });
 
-        if (!response.ok) { // Check for HTTP errors (status not in the 200-299 range)
-            const errorData = await response.json(); // Parse the JSON error response
-            throw new Error(errorData.message || 'Error executing query'); // Throw an error with the message
-        }
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Error executing query');
+      }
 
-        const data = await response.json();
+      const data = await response.json();
+      
+      // Check if data is an array with at least one element
+      if (Array.isArray(data) && data.length > 0) {
         setResults(data);
-        setErrorMessage(''); // Clear any previous errors
-
+      } else if (Array.isArray(data) && data.length === 0) {
+        // Handle empty array result
+        setResults(null);
+        setSuccessMessage('Query executed successfully. No results returned.');
+      } else {
+        // Handle other successful responses
+        setResults(null);
+        setSuccessMessage('Operation completed successfully.');
+      }
     } catch (error) {
-        console.error('Error executing query:', error);
-        setErrorMessage(error.message); // Set the error message
-        setResults([{ error: error.message }]); // Display the error message to the user
+      console.error('Error executing query:', error);
+      setErrorMessage(error.message);
+      setResults(null);
     }
   };
 
   const executePredefinedQuery = async (queryType) => {
     const selectedQuery = predefinedQueries[queryType];
     if (!selectedQuery) return;
-    
+
+    setQuery(selectedQuery);
+
     try {
       const response = await fetch('http://localhost:8080/api/cypher/execute', {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain' },
-        body: selectedQuery
+        body: selectedQuery,
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || `Error executing ${queryType} query`);
       }
-      
+
       const data = await response.json();
-      setResults(data);
-      setErrorMessage(''); // Clear any previous errors
       
+      if (Array.isArray(data) && data.length > 0) {
+        setResults(data);
+        setSuccessMessage('');
+      } else {
+        setResults(null);
+        setSuccessMessage(`${queryType} query executed successfully. No results to display.`);
+      }
+      
+      setErrorMessage('');
     } catch (error) {
       console.error(`Error executing ${queryType} query:`, error);
-      setErrorMessage(error.message); // Set the error message
-      setResults([{ error: error.message }]);
+      setErrorMessage(error.message);
+      setResults(null);
+    }
+  };
+
+  const addKeywordToQuery = (keyword) => {
+    const newQuery = query + (query.length > 0 && !query.endsWith(' ') ? ' ' : '') + keyword + ' ';
+    setQuery(newQuery);
+    if (textFieldRef.current) {
+      textFieldRef.current.focus();
     }
   };
 
   return (
-    <div className="cypher-form-container">
-      <form onSubmit={handleSubmit}>
-        <div className="editor-wrapper">
-          <textarea
-            ref={textAreaRef}
-            value={query}
-            onChange={handleQueryChange}
-            onKeyDown={handleKeyDown}
-            placeholder="Enter your Cypher query..."
-            className="cypher-textarea"
-            spellCheck="false"
-          />
-          {suggestions.length > 0 && (
-            <div 
-              className="suggestions-container"
-              style={{
-                position: 'absolute',
-                left: '0',
-                top: '100%',
-                width: '200px',
-                backgroundColor: 'white',
-                border: '1px solid #ccc',
-                borderRadius: '4px',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                zIndex: 1000,
-                marginTop: '4px'
+    <ContentContainer>
+      <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+        <Typography variant="h5" sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
+          Cypher Query Editor
+        </Typography>
+
+        <EditorWrapper elevation={1}>
+          <form onSubmit={handleSubmit} style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+            <StyledTextarea
+              inputRef={textFieldRef}
+              fullWidth
+              multiline
+              minRows={8}
+              maxRows={12}
+              value={query}
+              onChange={handleQueryChange}
+              onKeyDown={handleKeyDown}
+              placeholder="Enter your Cypher query..."
+              variant="outlined"
+              sx={{ mb: 2, flexGrow: 1 }}
+              InputProps={{
+                style: { fontFamily: 'monospace' },
               }}
-            >
-              {suggestions.map((suggestion, index) => (
-                <div
-                  key={suggestion}
-                  onClick={() => applySuggestion(suggestion)}
-                  style={{
-                    padding: '8px 12px',
-                    cursor: 'pointer',
-                    backgroundColor: focusedIndex === index ? '#f0f0f0' : 'white'
-                  }}
-                  onMouseEnter={() => setFocusedIndex(index)}
-                  onMouseLeave={() => setFocusedIndex(-1)}
-                >
-                  {suggestion}
-                  
-                </div>
-              ))}
-            </div>
+            />
 
-            
-            
-          )}
-          {errorMessage && (
-          <div 
-            className="error-message"
-            style={{
-              color: '#ff3333',
-              backgroundColor: '#ffeeee',
-              padding: '8px 12px',
-              borderRadius: '4px',
-              marginBottom: '10px',
-              fontSize: '14px',
-              border: '1px solid #ffcccc'
-            }}
-          >
-            <strong>Error:</strong> {errorMessage}
-          </div>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <ButtonGroup variant="contained">
+                <Button color="primary" type="submit" startIcon={<PlayArrowIcon />}>
+                  Execute Query
+                </Button>
+              </ButtonGroup>
+
+              <ButtonGroup variant="outlined">
+                <Tooltip title="Load all suppliers">
+                  <Button onClick={() => executePredefinedQuery('furnizor')} startIcon={<StorageIcon />}>
+                    Suppliers
+                  </Button>
+                </Tooltip>
+                <Tooltip title="Load all products">
+                  <Button onClick={() => executePredefinedQuery('produs')} startIcon={<CodeIcon />}>
+                    Products
+                  </Button>
+                </Tooltip>
+              </ButtonGroup>
+            </Box>
+          </form>
+
+          <Popper open={Boolean(anchorEl) && suggestions.length > 0} anchorEl={anchorEl} placement="bottom-start" sx={{ zIndex: 1500 }}>
+            <SuggestionsList>
+              <List dense>
+                {suggestions.map((suggestion, index) => (
+                  <ListItem
+                    key={suggestion}
+                    button
+                    selected={focusedIndex === index}
+                    onClick={() => applySuggestion(suggestion)}
+                    dense
+                  >
+                    <ListItemText primary={suggestion} />
+                  </ListItem>
+                ))}
+              </List>
+            </SuggestionsList>
+          </Popper>
+        </EditorWrapper>
+
+        {errorMessage && (
+          <Alert severity="error" sx={{ mx: 2, mb: 2 }} onClose={() => setErrorMessage('')}>
+            {errorMessage}
+          </Alert>
         )}
-        </div>
-        <div style={{ display: 'flex' }}>
-        <button type="submit" className="execute-button">
-          Execute Query
-          
-        </button>
-        <button 
-            type="button" 
-            className="execute-button" 
-            onClick={() => executePredefinedQuery('furnizor')}
-          >
-            Load Suppliers
-          </button>
 
-          <button 
-            type="button" 
-            className="execute-button" 
-            onClick={() => executePredefinedQuery('produs')}
-          >
-            Load Products
-          </button>
-          </div>
-      </form>
-    </div>
+        {successMessage && (
+          <Alert severity="success" sx={{ mx: 2, mb: 2 }} onClose={() => setSuccessMessage('')}>
+            {successMessage}
+          </Alert>
+        )}
+
+        {results && results.length > 0 && (
+          <Box sx={{ p: 2 }}>
+            <Typography variant="h5" sx={{ mb: 2 }}>
+              Query Results
+              <Typography variant="body2" color="text.secondary" component="span" sx={{ ml: 1 }}>
+                ({results.length} row{results.length !== 1 ? 's' : ''})
+              </Typography>
+            </Typography>
+
+            <Paper elevation={2} sx={{ width: '100%' }}>
+              <StyledTableContainer>
+                <Table stickyHeader>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>#</TableCell>
+                      {Object.keys(results[0]).map((key) => (
+                        <TableCell key={key}>{key}</TableCell>
+                      ))}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {results.map((row, rowIndex) => (
+                      <TableRow key={rowIndex} hover sx={{ '&:nth-of-type(odd)': { backgroundColor: 'action.hover' } }}>
+                        <TableCell>{rowIndex + 1}</TableCell>
+                        {Object.keys(row).map((key) => (
+                          <TableCell key={`${rowIndex}-${key}`}>{formatCellValue(row[key])}</TableCell>
+                        ))}
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </StyledTableContainer>
+            </Paper>
+          </Box>
+        )}
+      </Box>
+    </ContentContainer>
   );
 };
 
-export default CypherEditor;
+export default CypherForm;

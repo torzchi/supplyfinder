@@ -1,50 +1,71 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import CypherForm from "./components/CypherForm";
-import ResultsTable from "./components/ResultsTable";
-import GeminiChat from "./components/GeminiChat";
-import "./App.css";
+import React, { useState } from 'react';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { Box } from '@mui/material';
 
-function Sidebar() {
+import Sidebar from './components/Sidebar';
+import GeminiChat from './components/GeminiChat';
+import CypherForm from './components/CypherForm';
+import Card from './components/Card';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#3182ce',
+      dark: '#2d3748',
+      light: '#63b3ed',
+    },
+    secondary: {
+      main: '#38a169',
+    },
+    background: {
+      default: '#f7fafc',
+      paper: '#ffffff',
+    },
+  },
+  typography: {
+    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+        },
+      },
+    },
+  },
+});
+
+const App = () => {
+  const [currentPage, setCurrentPage] = useState('chat');
+
+  const handleNavigate = (page) => {
+    setCurrentPage(page);
+  };
+
+  const renderContent = () => {
+    switch (currentPage) {
+      case 'chat':
+        return <GeminiChat />;
+      case 'cypher':
+        return <CypherForm />;
+      case 'Shop':
+        return <Card />;
+      default:
+        return <Card />;
+    }
+  };
+
   return (
-    <div className="sidebar">
-      <h2>Sidebar</h2>
-      <ul>
-        <li><a href="/">Cypher Console</a></li>
-        <li><a href="/chat">Gemini Chat</a></li>
-      </ul>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Box sx={{ display: 'flex' }}>
+        <Sidebar onNavigate={handleNavigate} currentPage={currentPage} />
+        {renderContent()}
+      </Box>
+    </ThemeProvider>
   );
-}
-
-function App() {
-  const [results, setResults] = useState([]);
-
-  return (
-    <Router>
-      <div className="app-container">
-        {/* Sidebar */}
-        <Sidebar />
-        
-        {/* Main content area */}
-        <div className="content">
-          <Routes>
-            <Route 
-              path="/" 
-              element={
-                <div>
-                  <h1>Neo4j Cypher Query Console</h1>
-                  <CypherForm setResults={setResults} />
-                  <ResultsTable results={results} />
-                </div>
-              }
-            />
-            <Route path="/chat" element={<GeminiChat />} />
-          </Routes>
-        </div>
-      </div>
-    </Router>
-  );
-}
+};
 
 export default App;
