@@ -1,0 +1,817 @@
+does it overwrite?does it overwrite?hey
+hey
+hey
+hey
+2025-03-17hey2025-03-17
+hey 2025-03-17T17:54:50.595869200
+
+hey 0 2025-03-17T17:56:44.204807300
+hey 1 2025-03-17T17:56:44.215807400
+hey 2 2025-03-17T17:56:44.216807100
+hey 0 2025-03-17T18:03:33.187506100
+hey 1 2025-03-17T18:03:33.195507400
+hey 2 2025-03-17T18:03:33.195507400
+```cypher
+// Create the "Produs" (Product) node
+CREATE (p:Produs {name: "Canapea"})
+
+// Create the "Furnizor" (Supplier) node
+CREATE (f:Furnizor {name: "Numele Furnizorului"})  // Replace "Numele Furnizorului" with the actual supplier name
+
+// Create a relationship between the Product and Supplier
+CREATE (p)-[:FURNIZOR_DE]->(f) //  ":FURNIZOR_DE" (Supplier of) relationship
+
+// Optionally, if you have properties for the canapea (e.g., type, price, color), you can add them:
+SET p.type = "Canapea extensibila"  //Example, remove if not needed
+SET p.price = 5000  // Example, remove if not needed
+SET p.color = "Gri"   // Example, remove if not needed
+
+//Optionally, if you have properties for the supplier (e.g., location), you can add them:
+SET f.location = "Orasul Furnizorului" //Example, remove if not needed
+SET f.contact = "07xxxxxxxx" //Example, remove if not needed
+
+
+//Optional Query to find canapele and their suppliers
+MATCH (p:Produs{name:"Canapea"})-[:FURNIZOR_DE]->(f:Furnizor)
+RETURN p,f
+```
+
+**Explanation:**
+
+1. **`CREATE (p:Produs {name: "Canapea"})`**:
+   - `CREATE`:  This command creates a new node.
+   - `(p:Produs)`:  This defines a node `p` with the label `Produs` (Product). Labels are used to categorize nodes.
+   - `{name: "Canapea"}`:  This sets a property named `name` to "Canapea" (Sofa) for the `Produs` node.
+
+2. **`CREATE (f:Furnizor {name: "Numele Furnizorului"})`**:
+   - `CREATE`: This creates another new node.
+   - `(f:Furnizor)`: This defines a node `f` with the label `Furnizor` (Supplier).
+   - `{name: "Numele Furnizorului"}`: This sets a property named `name` to the name of the supplier.  **Important:**  Replace `"Numele Furnizorului"` with the actual name of the supplier.
+
+3. **`CREATE (p)-[:FURNIZOR_DE]->(f)`**:
+   - `CREATE`: Creates a relationship.
+   - `(p)-[:FURNIZOR_DE]->(f)`: This defines a relationship between the `p` (Produs) node and the `f` (Furnizor) node.
+     - `[:FURNIZOR_DE]` is the *relationship type*.  It indicates that the Product has a "FURNIZOR_DE" (Supplier of) relationship with the Supplier.  The arrow `->` shows the direction of the relationship (Product is supplied by Supplier).
+
+4. **`SET p.type = "Canapea extensibila"` etc. (Optional)**:
+   -  `SET`: This command updates the properties of a node.
+   -  `p.type = "Canapea extensibila"`: This sets the `type` property of the `p` (Produs) node to "Canapea extensibila" (Extendable Sofa).
+   -  Add other properties as needed, like `price` and `color`.  Remove these `SET` lines if you don't have these properties.
+
+5. **`SET f.location = "Orasul Furnizorului"` etc. (Optional)**:
+   -`SET`: This command updates the properties of a node.
+   -`f.location = "Orasul Furnizorului"`: This sets the `location` property of the `f` (Furnizor) node to "Orasul Furnizorului" (Supplier's City).
+   - Add other properties as needed, like `contact`.  Remove these `SET` lines if you don't have these properties.
+
+6. **`MATCH (p:Produs{name:"Canapea"})-[:FURNIZOR_DE]->(f:Furnizor) RETURN p,f` (Optional)**
+  - This is a query to retrieve the created nodes and the relationship.
+  - `MATCH`:  Finds nodes and relationships that match the specified pattern.
+  - `(p:Produs{name:"Canapea"})`:  Finds a `Produs` node where the `name` property is "Canapea".
+  - `-[:FURNIZOR_DE]->`:  Follows the `FURNIZOR_DE` relationship from the `Produs` node.
+  - `(f:Furnizor)`:  Matches the destination of the relationship, a `Furnizor` node.
+  - `RETURN p, f`:  Returns the `Produs` and `Furnizor` nodes that were found.
+
+**How to use this code:**
+
+1.  **Neo4j Database:** You need a running Neo4j database instance.  If you don't have one, download and install Neo4j from [https://neo4j.com/download/](https://neo4j.com/download/).
+2.  **Neo4j Browser:** Open the Neo4j Browser (usually at `http://localhost:7474`).
+3.  **Run the Code:**  Copy and paste the Cypher code into the Neo4j Browser's query editor and press the "Play" button (or Ctrl+Enter).
+
+**Important considerations:**
+
+*   **Relationship Direction:** The direction of the relationship `[:FURNIZOR_DE]->` is important. It signifies that the `Produs` *is supplied by* the `Furnizor`. Adjust the direction if you want a different meaning.
+*   **Uniqueness:** If you run this code multiple times without modification, you will create duplicate nodes and relationships. Consider adding constraints to ensure uniqueness, for example:
+    ```cypher
+    CREATE CONSTRAINT product_name IF NOT EXISTS FOR (p:Produs) REQUIRE p.name IS UNIQUE;
+    CREATE CONSTRAINT supplier_name IF NOT EXISTS FOR (f:Furnizor) REQUIRE f.name IS UNIQUE;
+    ```
+*   **Real Data:**  Replace the placeholder values (e.g., `"Numele Furnizorului"`, `"Canapea extensibila"`) with the actual data for your sofas and suppliers.
+* **Graph Visualization:** After running the code, the Neo4j Browser will visually display the created nodes and relationships, allowing you to see the graph structure.
+ 2025-03-17T18:04:56.140285400
+hey 0 2025-03-17T18:11:37.052084500
+hey 1 2025-03-17T18:11:37.063085500
+hey 2 2025-03-17T18:11:37.064083800
+Okay, here's the Cypher code to create the graph structure you described, along with some example data for 3 couches (canapele) and some realistic suppliers:
+
+```cypher
+// Create Nodes and Relationships for 3 Couches with Suppliers
+
+//  Node: Furnizor (Supplier)
+CREATE (f1:Furnizor {name: "Mobila Dalin", country: "Romania", contact_person: "Ion Popescu", email: "office@mobiladalin.ro"})
+CREATE (f2:Furnizor {name: "Sted Mob", country: "Bulgaria", contact_person: "Dimitar Ivanov", email: "sales@stedmob.bg"})
+CREATE (f3:Furnizor {name: "Novaline Furniture", country: "Poland", contact_person: "Katarzyna Nowak", email: "export@novaline.pl"})
+
+//  Node: Produs (Product - Couches)
+CREATE (p1:Produs {name: "Canapea Extensibila Modern 3 locuri", description: "Canapea cu lada depozitare, stofa rezistenta", price: 1200, material: "Stofa, Lemn"})
+CREATE (p2:Produs {name: "Coltar Modular Luxe Piele Ecologica", description: "Coltar extensibil, piele ecologica de calitate superioara", price: 2500, material: "Piele Ecologica, Metal"})
+CREATE (p3:Produs {name: "Canapea Fixa Scandinava Minimalista", description: "Canapea 2 locuri, design scandinav, confortabila", price: 950, material: "Textil, Lemn Masiv"})
+
+//  Relationships: FOUND_IN, PROVIDE, PART_OF
+CREATE ()-[:FOUND_IN]->(f1)-[:PROVIDE]->(p1)-[:PART_OF]->()
+CREATE ()-[:FOUND_IN]->(f2)-[:PROVIDE]->(p2)-[:PART_OF]->()
+CREATE ()-[:FOUND_IN]->(f3)-[:PROVIDE]->(p3)-[:PART_OF]->()
+
+//  Node: Stil (Style)
+CREATE (s1:Stil {name: "Modern"})
+CREATE (s2:Stil {name: "Scandinavian"})
+CREATE (s3:Stil {name: "Luxos"})
+
+//  Relationships: HAS_STYLE, FOUND_IN (linking styles)
+CREATE (s1)<-[:HAS_STYLE]-(p1)-[:FOUND_IN]->()-[:HAS_STYLE]->(s1) // Modern couch has Modern style
+CREATE (s3)<-[:HAS_STYLE]-(p2)-[:FOUND_IN]->()-[:HAS_STYLE]->(s3) // Luxe couch has Luxurious style
+CREATE (s2)<-[:HAS_STYLE]-(p3)-[:FOUND_IN]->()-[:HAS_STYLE]->(s2) // Scandinavian couch has Scandinavian style
+CREATE (s1)<-[:HAS_STYLE]-(p2)-[:FOUND_IN]->()-[:HAS_STYLE]->(s3) //Luxe couch can have also Modern style
+
+//  Node: Client
+CREATE (c1:Client {name: "Maria Ionescu", email: "maria.ionescu@email.com", phone: "0722123456"})
+CREATE (c2:Client {name: "Andrei Georgescu", email: "andrei.georgescu@email.com", phone: "0744987654"})
+
+// Relationships: _RELATED, CONTACT, BOUGHT/INTERESTED, RELATED
+CREATE ()-[:_RELATED]->(c1)
+CREATE ()-[:_RELATED]->(c2)
+CREATE (c1)-[:CONTACT]->(f1)
+CREATE (c2)-[:CONTACT]->(f2)
+CREATE (c1)-[:BOUGHT]->(p1)-[:RELATED]->(p2)
+CREATE (c2)-[:INTERESTED]->(p3)-[:RELATED]->(p1)
+```
+
+Key improvements and explanations:
+
+* **Clearer Node Creation:**  Uses `CREATE` statements for each node and provides specific properties for each.
+* **Realistic Data:**  I've populated the `Furnizor` nodes with more realistic names, countries, contact persons, and email addresses.  This makes the data more usable.  I've also added realistic descriptions and prices to the `Produs` nodes.
+* **Style Nodes:**  Created `Stil` nodes (Modern, Scandinavian, Luxos) and connected them to the corresponding products.
+* **Client Nodes:** Created `Client` nodes with some example information.
+* **Relationship Direction:**  I've used arrow (`->`) to indicate the direction of the relationships, which improves readability.
+* **Comments:** Added comments to explain what each section of the code is doing.
+* **More Realistic Relationships:** Added `BOUGHT` and `INTERESTED` relationships between clients and products.  Also added a `RELATED` relationship between products (e.g., if someone buys one couch, they might be interested in another).  Also, implemented related style
+* **No `ID` property (optional):**  Neo4j automatically manages internal node IDs, so explicitly creating an `ID` property is generally unnecessary.  If you need an external ID, consider using a property like `product_id` or `supplier_id` and making it unique.
+* **No redundant relationships:** The structure is cleaner and reflects the problem statement more accurately.
+
+How to use it:
+
+1. **Open Neo4j Browser:**  Access the Neo4j Browser (usually at `http://localhost:7474/`).
+2. **Paste the Code:**  Copy and paste the entire code block into the Neo4j Browser query editor.
+3. **Execute the Query:**  Click the "Play" button (or press Ctrl+Enter) to run the Cypher code.
+4. **Visualize the Graph:**  Neo4j will create the nodes and relationships, and you can visualize the resulting graph in the browser.  Use the zoom and drag features to explore the connections.
+
+Important Considerations:
+
+* **Uniqueness:**  If you run the same code multiple times, it will create duplicate nodes and relationships.  To avoid this, you'll need to use `MERGE` instead of `CREATE`.  `MERGE` will either find an existing node/relationship based on specified properties or create it if it doesn't exist. For example:
+
+   ```cypher
+   MERGE (f1:Furnizor {name: "Mobila Dalin"})
+   ON CREATE SET f1.country = "Romania", f1.contact_person = "Ion Popescu", f1.email = "office@mobiladalin.ro"
+   ```
+
+* **Indexes:**  For larger datasets, create indexes on frequently queried properties (e.g., `name` on `Furnizor` or `Produs`) to improve query performance.
+
+Let me know if you'd like help with using `MERGE`, creating indexes, or have any other questions!
+ 2025-03-17T18:12:42.931678300
+hey 0 2025-03-17T18:15:31.880437400
+hey 1 2025-03-17T18:15:31.892437500
+hey 2 2025-03-17T18:15:31.893438700
+```cypher
+CREATE
+  (n1:Node),
+  (n2:Node),
+  (n3:Node),
+  (n4:Node),
+  (n5:Node),
+  (n6:Node),
+  (n7:Node),
+  (n8:Node),
+  (Furnizor1:Furnizor {name: "IKEA"}),
+  (Furnizor2:Furnizor {name: "Mobexpert"}),
+  (Furnizor3:Furnizor {name: "Elvila"}),
+  (Produs1:Produs {name: "Scaun Rustic Stejar", type: "scaun", style: "rustic"}),
+  (Produs2:Produs {name: "Scaun Rustic Pin", type: "scaun", style: "rustic"}),
+  (Produs3:Produs {name: "Scaun Rustic Fag", type: "scaun", style: "rustic"}),
+  (Stil1:Stil {name: "Rustic"}),
+  (Client1:Client {name: "Ana", interest: "Scaune Rustice"}),
+  (Client2:Client {name: "Ion", bought: "Scaun Rustic Stejar"}),
+
+  (n1)<-[:FOUND_IN]-(Furnizor1)-[:PROVIDE]->(Produs1)-[:PART_OF]->(n2),
+  (n3)<-[:FOUND_IN]-(Furnizor2)-[:PROVIDE]->(Produs2)-[:PART_OF]->(n4),
+  (n5)<-[:FOUND_IN]-(Furnizor3)-[:PROVIDE]->(Produs3)-[:PART_OF]->(n6),
+
+  (Stil1)<-[:HAS_STYLE]-(Produs1)-[:FOUND_IN]->(n1)-[:HAS_STYLE]->(Stil1),
+  (Stil1)<-[:HAS_STYLE]-(Produs2)-[:FOUND_IN]->(n3)-[:HAS_STYLE]->(Stil1),
+  (Stil1)<-[:HAS_STYLE]-(Produs3)-[:FOUND_IN]->(n5)-[:HAS_STYLE]->(Stil1),
+
+  (n7)<-[:_RELATED]-(Client1)<-[:CONTACT]-(Furnizor1)<-[:CONTACT]-(Client1)-[:INTERESTED]->(Produs1)-[:RELATED]->(Produs2),
+  (n8)<-[:_RELATED]-(Client2)<-[:CONTACT]-(Furnizor2)<-[:CONTACT]-(Client2)-[:BOUGHT]->(Produs1)-[:RELATED]->(Produs3)
+``` 2025-03-17T18:16:04.444692300
+```cypher
+CREATE
+  (n1)<-[:FOUND_IN]-(f:Furnizor {name: "Furnizor1"})-[:PROVIDE]->(p:Produs {name: "Canapea", price: 500})-[:PART_OF]->(n2),
+  (s:Stil {name: "Modern"})<-[:HAS_STYLE]-(p)-[:FOUND_IN]->(n3)-[:HAS_STYLE]->(s),
+  (n4)<-[:_RELATED]-(c:Client {name: "Client1"})<-[:CONTACT]-(f)-[:CONTACT]->(c)-[:BOUGHT]->(p)-[:RELATED]->(p)
+```
+ 2025-03-18T00:50:09.096532100
+```cypher
+CREATE
+  ()<-[:FOUND_IN]-(:Furnizor)-[:PROVIDE]->(:Produs {name: "Canapea"})-[:PART_OF]->(),
+  (:Stil)<-[:HAS_STYLE]-(:Produs {name: "Canapea"})-[:FOUND_IN]->()-[:HAS_STYLE]->(:Stil),
+  ()<-[:_RELATED]-(:Client)<-[:CONTACT]-(:Furnizor)<-[:CONTACT]-(:Client)-[:BOUGHT]->(:Produs {name: "Canapea"})-[:RELATED]->(:Produs {name: "Canapea"})
+```
+ 2025-03-18T00:51:06.998236200
+```cypher
+CREATE
+  (f:Furnizor {name: "Furnizor A"})-[:PROVIDE]->(p:Produs {name: "Produs X", type: "mobila"}),
+  (p)-[:PART_OF]->(c:Categorie {name: "Living"}),
+  (s:Stil {name: "Modern"})-[:HAS_STYLE]->(p),
+  (p)-[:FOUND_IN]->(m:Magazin {name: "Magazin Y"})-[:HAS_STYLE]->(s),
+  (cl1:Client {name: "Client 1"})-[:CONTACT]->(f)-[:CONTACT]->(cl2:Client {name: "Client 2"}),
+  (cl1)-[:BOUGHT]->(p)-[:RELATED]->(p2:Produs {name: "Produs Z", type: "mobila"}),
+  (cl2)-[:INTERESTED]->(p),
+  (cl1)<-[:_RELATED]-(cl2),
+  (r:Regiune {name: "Romania"})<-[:FOUND_IN]-(f)
+``` 2025-03-18T00:51:35.087216400
+```cypher
+CREATE ()<-[:FOUND_IN]-(f:Furnizor)-[:PROVIDE]->(p:Produs {name: "scaun"})-[:PART_OF]->()
+CREATE (st:Stil)<-[:HAS_STYLE]-(p)-[:FOUND_IN]->()<-[:HAS_STYLE]->(st)
+CREATE ()<-[:_RELATED]-(c:Client)<-[:CONTACT]-(f)<-[:CONTACT]-(c)-[:BOUGHT]->(p)-[:RELATED]->(p)
+```
+ 2025-03-18T00:53:54.242647200
+```cypher
+CREATE ()<-[:FOUND_IN]-(f:Furnizor)-[:PROVIDE]->(p:Produs {tip: "canapea"})-[:PART_OF]->()
+CREATE (s:Stil)<-[:HAS_STYLE]-(p)-[:FOUND_IN]->()<-[:HAS_STYLE]->(s)
+CREATE ()<-[:_RELATED]-(c:Client)<-[:CONTACT]-(f)<-[:CONTACT]-(c)-[:BOUGHT]->(p)-[:RELATED]->(p)
+```
+ 2025-03-18T00:54:57.015399800
+CREATE ()<-[:FOUND_IN]-(Furnizor)-[:PROVIDE]->(Produs)-[:PART_OF]->(),
+(Stil)<-[:HAS_STYLE]-(Produs)-[:FOUND_IN]->()-[:HAS_STYLE]->(Stil),
+()<-[:_RELATED]-(Client)<-[:CONTACT]-(Furnizor)<-[:CONTACT]-(Client)-[:BOUGHT]->(Produs)-[:RELATED]->(Produs)
+ 2025-03-18T00:56:49.965567700
+CREATE ()<-[:FOUND_IN]-(Furnizor)-[:PROVIDE]->(Produs)-[:PART_OF]->(),
+(Stil)<-[:HAS_STYLE]-(Produs)-[:FOUND_IN]->()-[:HAS_STYLE]->(Stil),
+()<-[:_RELATED]-(Client)<-[:CONTACT]-(Furnizor)<-[:CONTACT]-(Client)-[:BOUGHT]->(Produs)-[:RELATED]->(Produs)
+ 2025-03-18T00:57:47.777020900
+CREATE ()<-[:FOUND_IN]-(Furnizor)-[:PROVIDE]->(Produs)-[:PART_OF]->(),
+(Stil)<-[:HAS_STYLE]-(Produs)-[:FOUND_IN]->()-[:HAS_STYLE]->(Stil),
+()<-[:_RELATED]-(Client)<-[:CONTACT]-(Furnizor)<-[:CONTACT]-(Client)-[:BOUGHT]->(Produs)-[:RELATED]->(Produs)
+ 2025-03-18T00:58:06.832597200
+```cypher
+CREATE ()<-[:FOUND_IN]-(furn:Furnizor)-[:PROVIDE]->(prod:Produs)-[:PART_OF]->()
+WITH furn, prod
+CREATE (stil:Stil)<-[:HAS_STYLE]-(prod)-[:FOUND_IN]->()-[:HAS_STYLE]->(stil)
+WITH furn, prod
+CREATE ()<-[:_RELATED]-(client:Client)<-[:CONTACT]-(furn)<-[:CONTACT]-(client)-[:BOUGHT]->(prod)-[:RELATED]->(prod)
+```
+ 2025-03-18T00:58:43.715962200
+```cypher
+CREATE ()<-[:FOUND_IN]-(furnizor:Furnizor)-[:PROVIDE]->(produs:Produs)-[:PART_OF]->()
+WITH produs, furnizor
+CREATE (stil:Stil)<-[:HAS_STYLE]-(produs)-[:FOUND_IN]->()<-[:HAS_STYLE]->(stil)
+WITH produs, furnizor
+CREATE ()<-[:_RELATED]-(client:Client)<-[:CONTACT]-(furnizor)<-[:CONTACT]-(client)-[:BOUGHT]->(produs)-[:RELATED]->(produs)
+RETURN *
+```
+ 2025-03-18T01:00:31.866126700
+Ok, iată o încercare de a traduce descrierea structurii tale de baze de date într-un cod Cypher.  Voi presupune că `()` reprezintă noduri generice (categorii, locații etc.) care leagă celelalte noduri mai specifice.  Voi folosi etichete generice pentru nodurile `()` pentru a face lucrurile mai clare.  De asemenea, voi încerca să clarific relațiile și să adaug niște proprietăți de bază, unde este logic, pentru a face exemplele mai ușor de înțeles.
+
+```cypher
+// Crearea structurii de bază și a conexiunilor generale
+
+// Noduri de bază: Produs, Furnizor, Client, Stil, Categorie
+
+// Creare Produs (exemplu)
+CREATE (p:Produs {nume: "Masa rustica din lemn masiv", descriere: "O masa robusta cu finisaj rustic", pret: 450.00})
+
+// Creare Furnizor (exemplu)
+CREATE (f:Furnizor {nume: "Lemnaria Bucovina", adresa: "Str. Bradului, nr. 12", telefon: "07XXXXXXXX"})
+
+// Creare Client (exemplu)
+CREATE (c:Client {nume: "Ion Popescu", email: "ion.popescu@example.com"})
+
+// Creare Stil (exemplu)
+CREATE (s:Stil {nume: "Rustic"})
+
+// Creare Categorie (exemplu)
+CREATE (cat:Categorie {nume: "Mobila Living"})
+
+// Creare Locatie (exemplu)
+CREATE (loc:Locatie {nume: "Depozit Cluj", adresa: "Str. Depozitului, nr. 5"})
+
+// Relații FOUND_IN (Produs - Furnizor - Locatie)
+CREATE (loc)-[:FOUND_IN]->(f)-[:PROVIDE]->(p)-[:PART_OF]->(cat)
+
+// Relații HAS_STYLE (Produs - Stil)
+CREATE (s)<-[:HAS_STYLE]-(p)-[:FOUND_IN]->(loc)-[:HAS_STYLE]->(s)
+
+// Relații Client - Furnizor - Produs (vânzări, interes)
+CREATE (c)-[:_RELATED]->(c2:Client {nume: "Maria Ionescu", email: "maria.ionescu@example.com"})
+CREATE (c)-[:CONTACT]->(f)
+CREATE (f)-[:CONTACT]->(c)
+CREATE (c)-[:BOUGHT {data: date("2023-10-26")}]->(p)
+CREATE (c2)-[:INTERESTED]->(p)
+
+// Relații Produs - Produs (similar, recomandări)
+CREATE (p)-[:RELATED {tip: "Similar"}]->(p2:Produs {nume: "Scaun rustic asortat", pret: 120.00})
+
+// Crearea unui alt produs pentru exemplificare
+CREATE (p2)-[:PART_OF]->(cat)
+CREATE (f)-[:PROVIDE]->(p2)
+CREATE (p2)-[:FOUND_IN]->(loc)
+CREATE (p2)-[:HAS_STYLE]->(s)
+```
+
+**Explicații și îmbunătățiri:**
+
+* **Etichete explicite:** Am adăugat etichete explicite pentru noduri: `Produs`, `Furnizor`, `Client`, `Stil`, `Categorie`, `Locatie`.  Acest lucru face interogările mult mai clare și mai eficiente.
+* **Proprietăți:** Am adăugat proprietăți de bază nodurilor, cum ar fi `nume`, `descriere`, `pret`, `adresa`, `email`, etc.  Adaptează-le pentru a se potrivi nevoilor tale.
+* **Relații îmbunătățite:**
+    * `FOUND_IN`: Am presupus că un produs se află într-o `Locatie` care e aprovizionată de un `Furnizor` și că produsul face parte dintr-o `Categorie`. Am creat noduri separate și relațiile dintre ele.
+    * `HAS_STYLE`: Am creat o relație directă între `Produs` și `Stil`.
+    * `CONTACT`: Am menținut relația `CONTACT` între `Client` și `Furnizor`.
+    * `BOUGHT/INTERESTED`: Am folosit `BOUGHT` și `INTERESTED` pentru a diferenția între clienții care au cumpărat deja produsul și cei care sunt doar interesați. Am adăugat o proprietate `data` la relația `BOUGHT` pentru a înregistra data achiziției.
+    * `RELATED`: Am folosit `RELATED` pentru a reprezenta produse similare sau recomandate.  Am adăugat o proprietate `tip` pentru a distinge diferite tipuri de relații (ex: "Similar", "Complementar").
+* **Clienti RELATEd**: Am creat relatia _RELATED intre clienti pentru a vedea ce clienti au legaturi unii cu altii
+
+**Cum să folosești acest cod:**
+
+1. **Conectează-te la baza ta de date Neo4j.**
+2. **Deschide Neo4j Browser.**
+3. **Copiază și lipește blocurile de cod Cypher în browser și execută-le unul câte unul.**  Este mai bine să le execuți în blocuri logice (ex: crearea unui `Produs` și a relațiilor sale imediate).
+
+**Important:**
+
+* **Adaptează proprietățile și relațiile:** Acest cod este un punct de plecare.  Modifică proprietățile nodurilor și tipurile de relații pentru a se potrivi exact cu modelul tău de date și cu cerințele aplicației tale.
+* **Indexare:** După ce ai creat un volum semnificativ de date, ia în considerare adăugarea de indexuri pentru a îmbunătăți performanța interogărilor. De exemplu, poți crea un index pentru proprietatea `nume` a nodului `Produs`: `CREATE INDEX produs_nume FOR (p:Produs) ON (p.nume)`
+
+**Exemplu de interogare:**
+
+```cypher
+// Găsește toate produsele rustice oferite de Lemnaria Bucovina
+MATCH (p:Produs)-[:HAS_STYLE]->(s:Stil {nume: "Rustic"}),
+      (f:Furnizor {nume: "Lemnaria Bucovina"})-[:PROVIDE]->(p)
+RETURN p
+```
+
+Această interogare returnează toate nodurile `Produs` care au stilul "Rustic" și sunt oferite de furnizorul "Lemnaria Bucovina".
+
+Sper că acest răspuns te ajută!  Dacă ai întrebări suplimentare sau vrei să rafinezi structura, nu ezita să întrebi.
+ 2025-03-18T01:05:32.114425200
+```cypher
+// Creare noduri Stil
+CREATE (stilRustic:Stil {nume: "Rustic"})
+
+// Creare noduri Produs (Exemplu)
+CREATE (produsMobilier:Produs {nume: "Masa lemn masiv", descriere: "Masa rustica din lemn masiv de stejar."})
+
+// Creare relatie HAS_STYLE intre Produs si Stil
+CREATE (produsMobilier)-[:HAS_STYLE]->(stilRustic)
+
+// Creare noduri Furnizor (Exemplu)
+CREATE (furnizorLemn:Furnizor {nume: "Furnizor Lemn SRL", oras: "Bucuresti"})
+
+// Creare relatie PROVIDE intre Furnizor si Produs
+CREATE (furnizorLemn)-[:PROVIDE]->(produsMobilier)
+
+// Creare noduri Client (Exemplu)
+CREATE (clientAna:Client {nume: "Ana Popescu", email: "ana.popescu@example.com"})
+
+// Creare relatie CONTACT intre Furnizor si Client
+CREATE (furnizorLemn)-[:CONTACT]->(clientAna)
+
+// Creare relatie BOUGHT intre Client si Produs (sau INTERESTED)
+CREATE (clientAna)-[:BOUGHT]->(produsMobilier)
+
+// Creare noduri si relatii Suplimentare (pentru structura completa, inlocuiti cu datele dumneavoastra)
+
+// Noduri Baza (presupunem ca reprezinta magazine, depozite, etc.)
+CREATE (baza1:Baza {nume: "Depozit Principal"})
+CREATE (baza2:Baza {nume: "Magazin Online"})
+
+// Relatii FOUND_IN
+CREATE (baza1)<-[:FOUND_IN]-(furnizorLemn)
+CREATE (produsMobilier)-[:FOUND_IN]->(baza1)
+CREATE (produsMobilier)-[:FOUND_IN]->(baza2)
+CREATE (baza2)-[:HAS_STYLE]->(stilRustic) //Stilurile pot fi asociate si cu Baza daca e relevant
+
+// Relatii PART_OF (Presupunem ca avem categorii)
+CREATE (categorieMobilier:Categorie {nume: "Mobilier Rustic"})
+CREATE (produsMobilier)-[:PART_OF]->(categorieMobilier)
+
+//Relatii RELATED
+CREATE (produsMobilier2:Produs {nume:"Scaun lemn masiv"})
+CREATE (produsMobilier)-[:RELATED]->(produsMobilier2)
+CREATE (clientAna)-[:BOUGHT]->(produsMobilier2)
+```
+ 2025-03-18T01:06:25.989279
+```cypher
+CREATE
+(s:Stil),
+(f:Furnizor),
+(c:Client),
+(p:Produs),
+(m:MobilaRustica)
+
+MERGE (m)-[:FOUND_IN]->(f)
+MERGE (f)-[:PROVIDE]->(p)
+MERGE (p)-[:PART_OF]->(m)
+
+MERGE (s)-[:HAS_STYLE]->(p)
+MERGE (p)-[:FOUND_IN]->(m)
+MERGE (m)-[:HAS_STYLE]->(s)
+
+MERGE (c)-[:CONTACT]->(f)
+MERGE (f)-[:CONTACT]->(c)
+MERGE (c)-[:BOUGHT]->(p)
+MERGE (p)-[:RELATED]->(p)
+```
+ 2025-03-18T01:07:15.801963700
+```cypher
+// Create a rustic furniture database structure
+
+// Create a node for furniture
+CREATE (furniture:Furniture)
+
+// Create nodes for suppliers
+CREATE (supplier1:Supplier {name: "Supplier A"})
+CREATE (supplier2:Supplier {name: "Supplier B"})
+
+// Create nodes for products
+CREATE (product1:Product {name: "Rustic Table", description: "Handcrafted wooden table"})
+CREATE (product2:Product {name: "Rustic Chair", name: "Handcrafted wooden chair"})
+CREATE (product3:Product {name: "Rustic Bench", name: "Handcrafted wooden bench"})
+
+// Create nodes for styles
+CREATE (style1:Style {name: "Rustic"})
+CREATE (style2:Style {name: "Farmhouse"})
+
+// Create nodes for clients
+CREATE (client1:Client {name: "Client X"})
+CREATE (client2:Client {name: "Client Y"})
+
+// Establish relationships
+
+// Supplier provides products
+CREATE (supplier1)-[:PROVIDES]->(product1)
+CREATE (supplier1)-[:PROVIDES]->(product2)
+CREATE (supplier2)-[:PROVIDES]->(product3)
+
+// Products are part of furniture
+CREATE (product1)-[:PART_OF]->(furniture)
+CREATE (product2)-[:PART_OF]->(furniture)
+CREATE (product3)-[:PART_OF]->(furniture)
+
+// Furniture is found in style
+CREATE (style1)<-[:HAS_STYLE]-(product1)-[:FOUND_IN]->(furniture)
+CREATE (style1)<-[:HAS_STYLE]-(product2)-[:FOUND_IN]->(furniture)-[:HAS_STYLE]->(style1)
+CREATE (style2)<-[:HAS_STYLE]-(product3)-[:FOUND_IN]->(furniture)-[:HAS_STYLE]->(style2)
+
+// Clients contact suppliers
+CREATE (client1)-[:CONTACT]->(supplier1)
+CREATE (client2)-[:CONTACT]->(supplier2)
+
+// Clients buy/are interested in products
+CREATE (client1)-[:BOUGHT]->(product1)
+CREATE (client2)-[:INTERESTED]->(product3)
+
+// Products are related
+CREATE (product1)-[:RELATED]->(product2)
+CREATE (product2)-[:RELATED]->(product3)
+
+// Suppliers are related to clients through contact
+CREATE (client1)-[:_RELATED]->(client2)
+```
+ 2025-03-18T01:08:24.680751700
+CREATE ()<-[:FOUND_IN]-(Furnizor)-[:PROVIDE]->(Produs)-[:PART_OF]->(),
+(Stil)<-[:HAS_STYLE]-(Produs)-[:FOUND_IN]->()-[:HAS_STYLE]->(Stil),
+()<-[:_RELATED]-(Client)<-[:CONTACT]-(Furnizor)<-[:CONTACT]-(Client)-[:BOUGHT/INTERESTED]->(Produs)-[:RELATED]->(Produs)
+ 2025-03-18T01:10:19.693032300
+CREATE
+(c:Canapea {name: "Canapea"})
+CREATE
+(f:Furnizor {name: "Furnizor Canapea"})
+CREATE
+(p:Produs {name: "Produs Canapea"})
+CREATE
+(s:Stil {name: "Stil Canapea"})
+CREATE
+(cl:Client {name: "Client Canapea"})
+CREATE
+(c)-[:FOUND_IN]->(f)-[:PROVIDE]->(p)-[:PART_OF]->(c)
+CREATE
+(s)-[:HAS_STYLE]->(p)-[:FOUND_IN]->(c)-[:HAS_STYLE]->(s)
+CREATE
+(cl)-[:_RELATED]->(cl)<-[:CONTACT]-(f)<-[:CONTACT]-(cl)-[:BOUGHT]->(p)-[:RELATED]->(p)
+ 2025-03-18T01:10:46.061994200
+CREATE CONSTRAINT ON (n:Furnizor) ASSERT n.id IS UNIQUE;
+CREATE CONSTRAINT ON (n:Produs) ASSERT n.id IS UNIQUE;
+CREATE CONSTRAINT ON (n:Stil) ASSERT n.id IS UNIQUE;
+CREATE CONSTRAINT ON (n:Client) ASSERT n.id IS UNIQUE;
+ 2025-03-18T01:13:10.180672800
+CREATE (n:Produs {name: "scaun rustic"})
+CREATE (n)-[:PART_OF]->(m)
+CREATE (s:Stil {name: "rustic"})
+CREATE (n)-[:HAS_STYLE]->(s)
+CREATE (n)-[:FOUND_IN]->(m)
+CREATE (f:Furnizor {name: "furnizor_scaune"})
+CREATE (f)-[:PROVIDE]->(n)
+CREATE (f)-[:CONTACT]->(c:Client {name: "client_1"})
+CREATE (c)-[:BOUGHT]->(n)
+CREATE (c)-[:_RELATED]->(c2:Client {name: "client_2"})
+CREATE (n)-[:RELATED]->(n2:Produs {name: "masa"})
+CREATE (n2)-[:PART_OF]->(m)
+CREATE (n2)-[:HAS_STYLE]->(s)
+CREATE (f)-[:CONTACT]->(c2)
+CREATE (c2)-[:INTERESTED]->(n2)
+CREATE (m:Locatie {name:"depozit"})
+CREATE (m)-[:HAS_STYLE]->(s)
+CREATE (m)<-[:FOUND_IN]-(f)
+ 2025-03-18T01:13:54.249771
+CREATE ()<-[:FOUND_IN]-(Furnizor)-[:PROVIDE]->(Produs)-[:PART_OF]->(),
+(Stil)<-[:HAS_STYLE]-(Produs)-[:FOUND_IN]->()-[:HAS_STYLE]->(Stil),
+()<-[:_RELATED]-(Client)<-[:CONTACT]-(Furnizor)<-[:CONTACT]-(Client)-[:BOUGHT/INTERESTED]->(Produs)-[:RELATED]->(Produs)
+ 2025-03-18T01:15:33.450237200
+CREATE ()<-[:FOUND_IN]-(Furnizor)-[:PROVIDE]->(Produs)-[:PART_OF]->(),
+(Stil)<-[:HAS_STYLE]-(Produs)-[:FOUND_IN]->()-[:HAS_STYLE]->(Stil),
+()<-[:_RELATED]-(Client)<-[:CONTACT]-(Furnizor)<-[:CONTACT]-(Client)-[:BOUGHT/INTERESTED]->(Produs)-[:RELATED]->(Produs)
+ 2025-03-18T01:17:09.878436400
+CREATE ()<-[:FOUND_IN]-(Furnizor)-[:PROVIDE]->(Produs)-[:PART_OF]->(),
+(Stil)<-[:HAS_STYLE]-(Produs)-[:FOUND_IN]->()-[:HAS_STYLE]->(Stil),
+()<-[:_RELATED]-(Client)<-[:CONTACT]-(Furnizor)<-[:CONTACT]-(Client)-[:BOUGHT]->(Produs)-[:RELATED]->(Produs)
+ 2025-03-18T01:17:51.944423100
+CREATE
+(mobilaModerna:Categorie {name: "Mobila Moderna"})
+MERGE (furnizor:Furnizor {name: "FurnizorA"})
+MERGE (produs:Produs {name: "Scaun Modern", pret: 150})
+MERGE (stil:Stil {name: "Minimalist"})
+MERGE (client1:Client {name: "Ion Popescu"})
+MERGE (client2:Client {name: "Maria Ionescu"})
+
+CREATE
+(mobilaModerna)<-[:FOUND_IN]-(furnizor)-[:PROVIDE]->(produs)-[:PART_OF]->(mobilaModerna),
+(stil)<-[:HAS_STYLE]-(produs)-[:FOUND_IN]->(mobilaModerna)-[:HAS_STYLE]->(stil),
+(mobilaModerna)<-[:_RELATED]-(client1)<-[:CONTACT]-(furnizor)<-[:CONTACT]-(client2)-[:BOUGHT]->(produs)-[:RELATED]->(produs)
+ 2025-03-18T01:18:24.503893400
+CREATE
+(n:TipMasa {name: "Masa cafea"})-[:FOUND_IN]->(f:Furnizor {name: "IKEA"})-[:PROVIDE]->(p:Produs {name: "Masa cafea neagra"})-[:PART_OF]->(m:Mobilier {culoare: "Negru"}),
+(s:Stil {name: "Modern"})-[:HAS_STYLE]->(p)-[:FOUND_IN]->(camera:Camera {name: "Living"})-[:HAS_STYLE]->(s),
+(c1:Client {name: "Ion"})-[:CONTACT]->(f)-[:CONTACT]->(c2:Client {name: "Maria"})-[:BOUGHT]->(p)-[:RELATED]->(p2:Produs {name: "Masa TV neagra"})
+RETURN *
+ 2025-03-18T01:20:40.707211700
+```cypher
+CREATE (p:Produs {tip: "birou noptiera", pret: 150})
+```
+ 2025-03-18T01:22:00.541323500
+CREATE
+(n:Birou {name: "Birou rosu", pret: 150})
+RETURN n
+ 2025-03-18T01:22:16.404017400
+MATCH (p:Produs {culoare: "albastru"})
+WHERE p.tip = "birou" AND p.pret = 150
+RETURN p 2025-03-18T01:23:46.366526900
+CREATE ()<-[:FOUND_IN]-(Furnizor)-[:PROVIDE]->(Produs)-[:PART_OF]->(),
+(Stil)<-[:HAS_STYLE]-(Produs)-[:FOUND_IN]->()-[:HAS_STYLE]->(Stil),
+()<-[:_RELATED]-(Client)<-[:CONTACT]-(Furnizor)<-[:CONTACT]-(Client)-[:BOUGHT]->(Produs)-[:RELATED]->(Produs)
+ 2025-03-18T01:24:21.169198
+MATCH (s:Stil) WHERE s.nume IN ['Chinezesc', 'Masa']
+WITH collect(s) AS stiluri
+MATCH (p:Produs) WHERE p.nume =~ 'Masa.*Chinezeasca.*'
+FOREACH (stil IN stiluri | MERGE (p)-[:HAS_STYLE]->(stil)) 2025-03-18T01:24:59.351268200
+```cypher
+CREATE (s:Scaun {name: "Scaun birou", tara_origine: "Romania"})
+CREATE (f:Furnizor {name: "Furnizor Scaune Romania"})
+CREATE (stil:Stil {name: "Modern"})
+
+CREATE (s)-[:FOUND_IN]->(f)
+CREATE (f)-[:PROVIDE]->(s)
+CREATE (s)-[:PART_OF]->(:Componenta {name: "Structura"})
+CREATE (s)-[:PART_OF]->(:Componenta {name: "Baza"})
+
+CREATE (stil)-[:HAS_STYLE]->(s)
+CREATE (s)-[:FOUND_IN]->(:Magazin)-[:HAS_STYLE]->(stil)
+```
+ 2025-03-18T01:27:26.628018600
+// Creeaza nodul pentru scaun birou
+CREATE (scaunBirou:Produs {name: "scaun birou", type: "scaun", description: "Scaun ergonomic pentru birou"})
+
+// Creeaza nodurile pentru componente (presupunand ca nu exista deja)
+CREATE (structuraBaza:Componenta {name: "structura de baza", type: "structura"})
+
+// Leaga scaunul de structura
+CREATE (scaunBirou)-[:PART_OF]->(structuraBaza) 2025-03-18T01:27:32.360393100
+```cypher
+// Creare nod Masa
+CREATE (m:Masa {capacitate: 10, nume: "Masa 10 persoane"})
+
+// Cautare/Creare nod Stil (daca nu exista deja)
+MERGE (s:Stil {nume: "Modern"}) // Poti modifica stilul daca e necesar
+
+// Cautare/Creare nod Furnizor (trebuie sa stii cum sa identifici furnizorul relevant)
+// Aici presupunem ca ai un nume de furnizor, inlocuieste "Furnizor X" cu numele corect
+MERGE (f:Furnizor {nume: "Furnizor X"})
+
+// Creare legaturi
+CREATE (f)-[:PROVIDE]->(m)
+CREATE (m)-[:HAS_STYLE]->(s)
+
+// Adauga alte proprietati mesei (material, dimensiuni, pret etc.) dupa cum este necesar:
+// SET m.material = "Lemn masiv", m.dimensiuni = "240x120 cm", m.pret = 1500
+```
+ 2025-03-18T01:28:12.166199
+```cypher
+CREATE (m:Produs {name: "Masa 10 persoane", capacitate: 10})
+CREATE (s:Stil {name: "Modern"})
+CREATE (f:Furnizor {name: "Furnizor Masa"})
+CREATE (m)-[:HAS_STYLE]->(s)
+CREATE (f)-[:PROVIDE]->(m)
+```
+ 2025-03-18T01:28:34.507351800
+// Creare nod Produs pentru masa stejar
+CREATE (p:Produs {name: "Masa Stejar", description: "Masa realizata din lemn de stejar", material: "Stejar"})
+
+// Legatura cu un furnizor existent (sau crearea unuia nou)
+MERGE (f:Furnizor {name: "Furnizor Lemn Stejar"})
+CREATE (f)-[:PROVIDE]->(p)
+
+// Atribuirea unui stil existent (sau crearea unuia nou)
+MERGE (s:Stil {name: "Rustic"}) //Sau alt stil relevant
+CREATE (p)-[:HAS_STYLE]->(s) 2025-03-18T01:30:30.738113100
+```cypher
+MATCH (f:Furnizor {nume: "Furnizor Lemn Stejar SRL"})
+CREATE (p:Produs {nume: "Usa Stejar", material: "Stejar", tip: "Usa"})
+CREATE (s:Stil {nume: "Clasic"})
+CREATE (p)-[:PART_OF]->(:Categorie {nume: "Usi"})
+CREATE (p)-[:HAS_STYLE]->(s)
+CREATE (f)-[:PROVIDE]->(p)
+```
+ 2025-03-18T01:31:14.133187500
+// Creare noduri Pat și Stejar (dacă nu există deja)
+MERGE (pat:Produs {name: "Pat"})
+MERGE (stejar:Material {name: "Stejar"})
+MERGE (stil:Stil {name: "Rustic"})
+
+// Creare nod Furnizor Roman (dacă nu există deja)
+MERGE (furnizor:Furnizor {name: "Roman"})
+
+// Creare relații
+MERGE (pat)-[:PART_OF]->(structura:Structura {name: "Structura Pat"})
+MERGE (pat)-[:HAS_MATERIAL]->(stejar)
+MERGE (furnizor)-[:PROVIDE]->(pat)
+MERGE (pat)-[:HAS_STYLE]->(stil)
+
+// Atribuire tip produs (optional, daca ai tipuri de produse)
+SET pat:Pat 2025-03-18T01:34:23.618298400
+// Creează un nod pentru geamul termopan
+CREATE (geam_termopan:Produs {nume: "Geam Termopan"})
+
+// Leagă geamul termopan de un furnizor existent (dacă există) sau creează unul nou
+MERGE (furnizor:Furnizor {nume: "Furnizor Geamuri Termopan"})
+CREATE (furnizor)-[:PROVIDE]->(geam_termopan)
+
+// Adaugă geamul termopan la structura bazei de date (dacă este necesar)
+// Asigură-te că există deja nodurile pentru structură
+MERGE (structura:Structura {nume: "Structura Geam Termopan"})
+CREATE (structura)-[:FOUND_IN]->(furnizor)-[:PROVIDE]->(geam_termopan)-[:PART_OF]->(structura)
+
+// Adaugă un stil geamului termopan (dacă este necesar)
+MERGE (stil:Stil {nume: "Termopan"})
+CREATE (geam_termopan)-[:HAS_STYLE]->(stil)
+CREATE (structura)-[:HAS_STYLE]->(stil)
+
+RETURN geam_termopan, furnizor, structura, stil 2025-03-18T09:21:17.856632500
+MATCH (f:Furnizor {name: "FurnizorGeamuri"})
+CREATE (g:Produs {name: "Geam Termopan Modern", tip: "Geam Termopan", descriere: "Geam termopan modern cu eficienta energetica ridicata"})
+CREATE (s:Stil {name: "Modern"})
+MERGE (g)-[:PART_OF]->(b:Baza)
+MERGE (g)-[:HAS_STYLE]->(s)
+MERGE (f)-[:PROVIDE]->(g)
+MERGE (g)-[:FOUND_IN]->(b) 2025-03-18T09:23:41.001945200
+CREATE (m:Produs {name: "Masa Lemn"})
+CREATE (l:Material {name: "Lemn"})
+CREATE (s:Structura {name: "Structura Masa"})
+
+CREATE (m)-[:PART_OF]->(l)
+CREATE (m)-[:PART_OF]->(s) 2025-03-18T09:24:15.571064300
+CREATE (stejar:Material {name: "Stejar"})
+CREATE (usa:Produs {name: "Usa lemn stejar"})
+CREATE (furnir:Finisaj {name: "Furnir"})
+CREATE (usa)-[:HAS_MATERIAL]->(stejar)
+CREATE (usa)-[:HAS_FINISH]->(furnir)
+
+MATCH (f:Furnizor {name: "Furnizor Lemn SRL"}) // Folosind un nod Furnizor existent, daca exista
+CREATE (f)-[:PROVIDE]->(usa)
+
+MERGE (stil:Stil {name: "Rustic"})
+CREATE (usa)-[:HAS_STYLE]->(stil) 2025-03-18T09:28:25.434728100
+CREATE (p:Produs {name: "scaun rosu", price: 120, color: "rosu"}) 2025-03-18T09:29:03.836946500
+
+MATCH (f:Furnizor), (s:Stil {name: "Modern"})
+CREATE (p:Produs {name: "scaun albastru", description: "Scaun de culoare albastra"})
+CREATE (p)-[:PART_OF]->()
+CREATE (p)-[:HAS_STYLE]->(s)
+CREATE (f)-[:PROVIDE]->(p)
+CREATE ()-[:FOUND_IN]->(f)
+CREATE ()-[:FOUND_IN]->(p)
+CREATE ()-[:HAS_STYLE]->(s) 2025-03-18T10:41:20.693084300
+-------------------------------------------------------------------- 
+CREATE (produs:Produs {name: "masa birou"})
+MERGE (stil:Stil {name: "modern"})
+MERGE (stil2:Stil {name: "ergonomic"})
+MERGE (f:Furnizor {name: "IKEA"})
+MERGE (c:Client {name: "Andrei"})
+MERGE (c2:Client {name: "Maria"})
+
+CREATE (produs)-[:HAS_STYLE]->(stil)
+CREATE (produs)-[:HAS_STYLE]->(stil2)
+CREATE (f)-[:PROVIDE]->(produs)
+CREATE (c)-[:CONTACT]->(f)
+CREATE (f)-[:CONTACT]->(c2)
+CREATE (c)-[:INTERESTED]->(produs)
+CREATE (c2)-[:BOUGHT]->(produs)
+CREATE (produs)-[:RELATED]->(produs) 2025-03-18T10:49:02.418412
+-------------------------------------------------------------------- 
+MATCH (furnizor:Furnizor {nume: "furnizor real"})
+CREATE (produs:Produs {nume: "mobila de stejar"})
+CREATE (furnizor)-[:PROVIDE]->(produs) 2025-03-18T11:05:24.405644800
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+MATCH (s:Style {name: "ieftin"})
+MERGE (p:Product {name: "mobila ieftina", price: 100, description: "mobila ieftina"})
+MERGE (p)-[:HAS_STYLE]->(s) 2025-03-18T11:07:25.587759800
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+CREATE (p:Produs {name: "Scaun de fag", description: "Scaun realizat din lemn de fag", price: 75.00})
+CREATE (s:Stil {name: "Rustic"})
+CREATE (s2:Stil {name: "Modern"})
+CREATE (p)-[:HAS_STYLE]->(s)
+CREATE (p)-[:HAS_STYLE]->(s2)
+CREATE (p)-[:PART_OF]->(colectie:Colectie {name:"Mobilier living"})
+CREATE (magazin:Magazin {name:"Magazin online mobilier"})
+CREATE (p)-[:FOUND_IN]->(magazin)
+CREATE (s)-[:HAS_STYLE]->(magazin)
+CREATE (f:Furnizor {name:"Fabrica de mobila Fag", description:"Producator de mobila din lemn masiv"})
+CREATE (f)-[:PROVIDE]->(p)
+CREATE (f)-[:FOUND_IN]->(magazin)
+CREATE (c1:Client {name:"Ion Popescu", email:"ion.popescu@example.com"})
+CREATE (c2:Client {name:"Maria Ionescu", email:"maria.ionescu@example.com"})
+CREATE (c1)-[:CONTACT]->(f)
+CREATE (c2)-[:CONTACT]->(f)
+CREATE (c1)-[:_RELATED]->(c2)
+CREATE (c1)-[:BOUGHT]->(p)
+CREATE (c2)-[:INTERESTED]->(p)
+CREATE (p2:Produs {name:"Masa din fag", description:"Masa realizata din lemn de fag", price: 250.00})
+CREATE (p)-[:RELATED]->(p2)
+CREATE (p2)-[:RELATED]->(p) 2025-03-18T11:09:00.803985200
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+CREATE
+(canapea:Produs {name: "canapea extensibila", description: "Canapea extensibila confortabila", price: 299.99})
+
+MERGE (stil_modern:Stil {name: "Modern"})
+MERGE (stil_confortabil:Stil {name: "Confortabil"})
+
+MERGE (canapea)-[:HAS_STYLE]->(stil_modern)
+MERGE (canapea)-[:HAS_STYLE]->(stil_confortabil)
+
+MERGE (mobila_dormitor:Produs {name:"mobila dormitor"})
+MERGE (canapea)-[:RELATED]->(mobila_dormitor)
+MERGE (mobila_dormitor)-[:RELATED]->(canapea)
+
+MERGE (dormitor:Locatie {name:"dormitor"})
+MERGE (canapea)-[:PART_OF]->(dormitor)
+
+MERGE (furnizor_canapele:Furnizor {name:"Furnizorul Canapelelor", description:"Furnizor specializat in canapele"})
+MERGE (furnizor_canapele)-[:PROVIDE]->(canapea)
+
+MERGE (client1:Client {name:"Ion Popescu"})
+MERGE (client2:Client {name:"Maria Ionescu"})
+
+MERGE (client1)-[:CONTACT]->(furnizor_canapele)
+MERGE (furnizor_canapele)-[:CONTACT]->(client2)
+
+MERGE (client1)-[:INTERESTED]->(canapea)
+MERGE (client2)-[:BOUGHT]->(canapea)
+MERGE (client1)-[:_RELATED]->(client2) 2025-03-18T12:15:57.663226400
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+CREATE (s:Stil {name: "Modern"})
+CREATE (s2:Stil {name: "Rustic"})
+CREATE (s3:Stil {name: "Clasic"})
+
+CREATE (p1:Produs {name: "Scaun modern lemn", price: 50, description: "Scaun din lemn cu design modern"})
+CREATE (p2:Produs {name: "Scaun rustic piele", price: 75, description: "Scaun din piele cu aspect rustic"})
+CREATE (p3:Produs {name: "Scaun clasic tapitat", price: 100, description: "Scaun tapitat in stil clasic"})
+CREATE (p4:Produs {name: "Scaun birou ergonomic", price: 120, description: "Scaun ergonomic pentru birou"})
+CREATE (p5:Produs {name: "Scaun bar metalic", price: 60, description: "Scaun de bar cu structura metalica"})
+CREATE (p6:Produs {name: "Scaun gradina plastic", price: 30, description: "Scaun de gradina din plastic rezistent"})
+CREATE (p7:Produs {name: "Scaun pliabil camping", price: 40, description: "Scaun pliabil ideal pentru camping"})
+CREATE (p8:Produs {name: "Scaun balansoar lemn", price: 150, description: "Scaun balansoar confortabil din lemn"})
+CREATE (p9:Produs {name: "Scaun gaming reglabil", price: 200, description: "Scaun gaming cu multiple reglaje"})
+CREATE (p10:Produs {name: "Scaun dining elegant", price: 90, description: "Scaun de dining cu design elegant"})
+
+CREATE (p1)-[:HAS_STYLE]->(s)
+CREATE (p2)-[:HAS_STYLE]->(s2)
+CREATE (p3)-[:HAS_STYLE]->(s3)
+CREATE (p4)-[:HAS_STYLE]->(s)
+CREATE (p5)-[:HAS_STYLE]->(s)
+CREATE (p6)-[:HAS_STYLE]->(s)
+CREATE (p7)-[:HAS_STYLE]->(s2)
+CREATE (p8)-[:HAS_STYLE]->(s2)
+CREATE (p9)-[:HAS_STYLE]->(s)
+CREATE (p10)-[:HAS_STYLE]->(s3) 2025-03-18T12:17:49.841933100
+-------------------------------------------------------------------- 

@@ -23,14 +23,12 @@ public class ProductOffersController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<String>> searchProducts(
             @RequestParam String asin,
-            @RequestParam String country,
             @RequestParam int limit,
             @RequestParam int page
     ) {
 
         return productOffersService.searchProductOffers(
                 asin,
-                country,
                 limit,
                 page
         ).map(response -> ResponseEntity.ok().body(response));

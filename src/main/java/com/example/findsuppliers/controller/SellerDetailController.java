@@ -22,13 +22,11 @@ public class SellerDetailController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<String>> searchProducts(
-            @RequestParam String seller_id,
-            @RequestParam String country
+            @RequestParam String seller_id
     ) {
 
         return SearchService.searchSellerDetails(
-                seller_id,
-                country
+                seller_id
         ).map(response -> ResponseEntity.ok().body(response));
     }
 }

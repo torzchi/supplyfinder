@@ -21,15 +21,13 @@ public class SellerDetailService {
     }
 
     public Mono<String> searchSellerDetails(
-            String seller_id,
-            String country
+            String seller_id
     ) {
 
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/seller-profile")
                         .queryParam("seller_id", seller_id)
-                        .queryParam("country", country)
                         .build())
                 .header("x-rapidapi-key", rapidApiKey)
                 .retrieve()

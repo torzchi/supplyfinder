@@ -22,7 +22,6 @@ public class ProductOffersService {
 
     public Mono<String> searchProductOffers(
             String asin,
-            String country,
             int limit,
             int page
     ) {
@@ -31,7 +30,6 @@ public class ProductOffersService {
                 .uri(uriBuilder -> uriBuilder
                         .path("/product-offers")
                         .queryParam("asin", asin)
-                        .queryParam("country", country)
                         .queryParam("limit", limit)
                         .queryParam("page", page)
                         .build())
