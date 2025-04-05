@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {  
   Typography, 
   List, 
@@ -37,13 +37,13 @@ const SidebarItem = styled(ListItem)(({ theme }) => ({
   marginBottom: theme.spacing(1),
 }));
 
-
-
-const Sidebar = ({ onNavigate, currentPage }) => {
+const Sidebar = () => {
+  const location = useLocation();
+  
   const menuItems = [
-    { text: 'Gemini Chat', icon: <ChatIcon />, page: 'chat' },
-    { text: 'Cypher Query', icon: <CodeIcon />, page: 'cypher' },
-    { text: 'Shop', icon: <AddBusiness />, page: 'Shop' },
+    { text: 'Gemini Chat', icon: <ChatIcon />, path: '/chat' },
+    { text: 'Cypher Query', icon: <CodeIcon />, path: '/cypher' },
+    { text: 'Shop', icon: <AddBusiness />, path: '/shop' },
   ];
 
   return (
@@ -58,10 +58,11 @@ const Sidebar = ({ onNavigate, currentPage }) => {
           <SidebarItem 
             button 
             key={item.text}
-            selected={currentPage === item.page}
-            onClick={() => onNavigate(item.page)}
+            component={Link}
+            to={item.path}
+            selected={location.pathname === item.path}
             sx={{
-              backgroundColor: currentPage === item.page ? 'rgba(255,255,255,0.08)' : 'transparent',
+              backgroundColor: location.pathname === item.path ? 'rgba(255,255,255,0.08)' : 'transparent',
             }}
           >
             <ListItemIcon sx={{ color: 'inherit' }}>
@@ -71,8 +72,6 @@ const Sidebar = ({ onNavigate, currentPage }) => {
           </SidebarItem>
         ))}
       </List>
-      
-  
     </SidebarContainer>
   );
 };

@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Box } from '@mui/material';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 
 import Sidebar from './components/Sidebar';
 import GeminiChat from './components/GeminiChat';
 import CypherForm from './components/CypherForm';
 import Card from './components/Card';
-import { Shop } from '@mui/icons-material';
 
 const theme = createTheme({
   palette: {
@@ -38,33 +38,36 @@ const theme = createTheme({
   },
 });
 
+const AppLayout = () => {
+  return (
+    <Box sx={{ display: 'flex' }}>
+      <Sidebar />
+      <Box component="main" sx={{ flexGrow: 1, p: 0 }}>
+        <Outlet /> {/* This renders the matched child route */}
+      </Box>
+    </Box>
+  );
+};
+
 const App = () => {
-  const [currentPage, setCurrentPage] = useState('chat');
-
-  const handleNavigate = (page) => {
-    setCurrentPage(page);
-  };
-
-  const renderContent = () => {
-    switch (currentPage) {
-      case 'chat':
-        return <GeminiChat />;
-      case 'cypher':
-        return <CypherForm />;
-      case 'Shop':
-        return <Card />;
-      default:
-        return <Card />;
-    }
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ display: 'flex' }}>
-        <Sidebar onNavigate={handleNavigate} currentPage={currentPage} />
-        {renderContent()}
-      </Box>
+      <BrowserRouter>
+        <Routes>
+          {/* Main layout route that contains Sidebar */}
+          <Route element={<AppLayout />}>
+            {/* Index route (default when path is '/') */}
+            <Route index element={<GeminiChat />} />
+            {/* Other routes */}
+            <Route path="chat" element={<GeminiChat />} />
+            <Route path="cypher" element={<CypherForm />} />
+            <Route path="shop" element={<Card />} />
+            {/* Optional: 404 catch-all route */}
+            <Route path="*" element={<Card />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   );
 };
