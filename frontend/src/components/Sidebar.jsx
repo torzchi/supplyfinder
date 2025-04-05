@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {  
   Typography, 
   List, 
@@ -35,6 +36,8 @@ const SidebarItem = styled(ListItem)(({ theme }) => ({
   },
   marginBottom: theme.spacing(1),
 }));
+
+
 
 const Sidebar = ({ onNavigate, currentPage }) => {
   const menuItems = [

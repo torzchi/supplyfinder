@@ -7,6 +7,7 @@ import Sidebar from './components/Sidebar';
 import GeminiChat from './components/GeminiChat';
 import CypherForm from './components/CypherForm';
 import Card from './components/Card';
+import { Shop } from '@mui/icons-material';
 
 const theme = createTheme({
   palette: {
