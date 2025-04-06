@@ -2,12 +2,13 @@ import React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Box } from '@mui/material';
-import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet, Navigate} from 'react-router-dom';
 
 import Sidebar from './components/Sidebar';
 import GeminiChat from './components/GeminiChat';
 import CypherForm from './components/CypherForm';
-import Card from './components/Card';
+import Shop from './components/Shop';
+import Homepage from './components/Homepage';
 
 const theme = createTheme({
   palette: {
@@ -62,9 +63,10 @@ const App = () => {
             {/* Other routes */}
             <Route path="chat" element={<GeminiChat />} />
             <Route path="cypher" element={<CypherForm />} />
-            <Route path="shop" element={<Card />} />
+            <Route path="shop" element={<Shop />} />
+            <Route path="home" element={<Homepage />} />
             {/* Optional: 404 catch-all route */}
-            <Route path="*" element={<Card />} />
+            <Route path="*" element={<Navigate to="/home" replace />} />
           </Route>
         </Routes>
       </BrowserRouter>

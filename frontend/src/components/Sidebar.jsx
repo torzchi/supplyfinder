@@ -12,6 +12,7 @@ import {
 import { styled } from '@mui/material/styles';
 import ChatIcon from '@mui/icons-material/Chat';
 import CodeIcon from '@mui/icons-material/Code';
+import HomeIcon from '@mui/icons-material/Home'
 import { AddBusiness } from '@mui/icons-material';
 
 const SidebarContainer = styled(Paper)(({ theme }) => ({
@@ -41,6 +42,7 @@ const Sidebar = () => {
   const location = useLocation();
   
   const menuItems = [
+    { text: 'Home', icon: <HomeIcon />, path: '/home' },
     { text: 'Gemini Chat', icon: <ChatIcon />, path: '/chat' },
     { text: 'Cypher Query', icon: <CodeIcon />, path: '/cypher' },
     { text: 'Shop', icon: <AddBusiness />, path: '/shop' },

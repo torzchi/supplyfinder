@@ -4,18 +4,21 @@ import ChairIcon from '@mui/icons-material/Chair';
 import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
 import WeekendIcon from '@mui/icons-material/Weekend';
 import BedIcon from '@mui/icons-material/Bed';
+import DeskIcon from '@mui/icons-material/Desk';
 import CategoryIcon from '@mui/icons-material/Category';
 
 export const getCategoryIcon = (category) => {
   switch (category) {
-    case "Chairs":
+    case "Chair":
       return <ChairIcon />;
-    case "Tables":
+    case "Table":
       return <TableRestaurantIcon />;
-    case "Sofas":
+    case "Sofa":
       return <WeekendIcon />;
-    case "Bedroom":
+    case "Bed":
       return <BedIcon />;
+      case "Desk":
+        return <DeskIcon />;
     default:
       return <CategoryIcon />;
   }
