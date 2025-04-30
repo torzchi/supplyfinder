@@ -1,9 +1,9 @@
 import React from 'react';
-import { Grid, Paper, Typography, Box, CircularProgress } from '@mui/material';
+import { Grid, Paper, Typography, Box, CircularProgress, Button } from '@mui/material';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import ProductCard from './ProductCard';
 
-const ProductsGrid = ({ loading, error, filteredProducts, expandedProduct, toggleProductExpansion }) => {
+const ProductsGrid = ({ loading, error, filteredProducts, expandedProduct, toggleProductExpansion, onExtendedSearch, onExtendedAPISearch }) => {
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', my: 8 }}>
@@ -29,9 +29,17 @@ const ProductsGrid = ({ loading, error, filteredProducts, expandedProduct, toggl
         <Paper sx={{ p: 6, textAlign: 'center' }}>
           <SentimentDissatisfiedIcon sx={{ fontSize: 60, color: 'text.secondary', mb: 2 }} />
           <Typography variant="h5" gutterBottom>No products found</Typography>
-          <Typography color="text.secondary">
+          <Typography color="text.secondary" sx={{ mb: 2 }}>
             Try adjusting your search or filter settings.
           </Typography>
+          <Button variant="contained" color="primary" onClick={onExtendedSearch}>
+            Extended AI Search
+          </Button>
+          <Button variant="contained" color="primary" onClick={onExtendedAPISearch} sx={{ ml: 2 }}>
+            Extended API Search
+          </Button>
+          
+          
         </Paper>
       </Grid>
     );

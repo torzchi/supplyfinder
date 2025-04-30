@@ -45,6 +45,7 @@ const Sidebar = () => {
     { text: 'Home', icon: <HomeIcon />, path: '/home' },
     { text: 'Gemini Chat', icon: <ChatIcon />, path: '/chat' },
     { text: 'Cypher Query', icon: <CodeIcon />, path: '/cypher' },
+    { text: 'Suppliers', icon: <CodeIcon />, path: '/suppliers' },
     { text: 'Shop', icon: <AddBusiness />, path: '/shop' },
   ];
 

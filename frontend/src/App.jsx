@@ -9,6 +9,7 @@ import GeminiChat from './components/GeminiChat';
 import CypherForm from './components/CypherForm';
 import Shop from './components/Shop';
 import Homepage from './components/Homepage';
+import SuppliersPage from './components/SuppliersPage';
 
 const theme = createTheme({
   palette: {
@@ -65,6 +66,7 @@ const App = () => {
             <Route path="cypher" element={<CypherForm />} />
             <Route path="shop" element={<Shop />} />
             <Route path="home" element={<Homepage />} />
+            <Route path="suppliers" element={<SuppliersPage />} />
             {/* Optional: 404 catch-all route */}
             <Route path="*" element={<Navigate to="/home" replace />} />
           </Route>
