@@ -2055,3 +2055,35 @@ Nu pot genera JSON fără a cunoaște produsul pe care îl cauți. Te rog să-mi
 }
 ``` 2025-04-30T20:58:54.279937400
 -------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "produs": {
+    "nume": "Calendar perpetuu de birou - Lemn natural",
+    "pret": 89.99,
+    "poza": "https://www.deco-boutique.ro/image/cache/catalog/produse/decoratiuni/calendare-perpetue/calendar-perpetuu-birou-lemn-1-600x600.jpg",
+    "furnizor": {
+      "nume": "Deco Boutique",
+      "adresa": "Str. Industriei, nr. 27, Bucuresti, Romania",
+      "contact": "+40722000000"
+    }
+  }
+}
+``` 2025-05-05T16:26:48.892723700
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "produs": {
+    "nume": "Masă dining extensibilă lemn masiv stejar și MDF furniruit, 160-200 cm, Barletta",
+    "pret": 2499.99,
+    "poza": "https://www.somproduct.ro/images/products/original/masa-dining-extensibila-lemn-masiv-stejar-si-mdf-furniruit-160-200-cm-barletta-1672822494.jpg",
+    "furnizor": {
+      "nume": "SomProduct",
+      "adresa": "Str. Poligonului nr. 1A, Sector 1, București",
+      "contact": "0371.23.56.78"
+    }
+  }
+}
+``` 2025-05-05T16:40:06.816114400
+-------------------------------------------------------------------- 
