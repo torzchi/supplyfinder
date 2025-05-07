@@ -2087,3 +2087,115 @@ Nu pot genera JSON fără a cunoaște produsul pe care îl cauți. Te rog să-mi
 }
 ``` 2025-05-05T16:40:06.816114400
 -------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "produs": {
+    "nume": "Masă dining extensibilă, lemn masiv de stejar, 160-240 cm, gri petrol",
+    "pret": 2499.99,
+    "poza": "https://cdn.vivre.eu/HBv6o19w9t1Q65Jm/images/products/2023-08/original/masa-dining-extensibila-lemn-masiv-de-stejar-160-240-cm-gri-petrol.jpg",
+    "furnizor": {
+      "nume": "Vivre Deco",
+      "adresa": "Str. Bucuresti Nord 15-23, Swan Office Park, Clădirea Windsor, Etaj 6, Sector 1, Bucuresti",
+      "contact": "+40 31 828 3000"
+    }
+  }
+}
+``` 2025-05-05T23:45:39.139608300
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "produs": {
+    "nume": "Masă dining extensibilă, lemn masiv, gri antracit",
+    "pret": 1299.99,
+    "poza": "https://www.somproduct.ro/cdn/shop/products/masa-extensibila-lemn-masiv-gri-antracit-somproduct-2.jpg?v=1678976543",
+    "furnizor": {
+      "nume": "SomProduct",
+      "adresa": "Str. Fabricii, nr. 136, Apahida, Cluj",
+      "contact": "Telefon: 0722.123.456, Email: contact@somproduct.ro"
+    }
+  }
+}
+``` 2025-05-05T23:54:41.233061700
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "produs": {
+    "nume": "Pernă decorativă catifea Smarald",
+    "pret": 79.99,
+    "poza": "https://www.zarahome.com/wcsstore/ZarahomeSAS/images/product/6422/050/800/6422050800_1_1_3.jpg?impolicy=zh_crop&cropW=1500&cropH=1500&output-quality=80",
+    "furnizor": {
+      "nume": "Zara Home",
+      "adresa": "Bulevardul Iuliu Maniu 6, AFI Cotroceni, București 061128, Romania",
+      "contact": "+40 21 300 8000"
+    }
+  }
+}
+``` 2025-05-06T00:09:34.725129200
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "produs": {
+    "nume": "Fotoliu Chesterfield Piele Naturala Coniac",
+    "pret": 4599.99,
+    "poza": "https://www.somproduct.ro/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/f/o/fotoliu_chesterfield_piele_naturala_coniac_1.jpg",
+    "furnizor": {
+      "nume": "SomProduct",
+      "adresa": "Str. Poligonului nr. 17, Timisoara, 300577, Romania",
+      "contact": "+40 371 070 070"
+    }
+  }
+}
+``` 2025-05-06T10:36:36.519441600
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "produs": {
+    "nume": "Canapea extensibilă 3 locuri, stofă gri deschis, Liva",
+    "pret": 1799.99,
+    "poza": "https://www.mobexpert.ro/media/catalog/product/cache/e9e530d029947af5e54c1430f52190cf/3/1/317270_01.jpg",
+    "furnizor": {
+      "nume": "Mobexpert",
+      "adresa": "Bulevardul Ghencea 45-47, București 061681, România",
+      "contact": "+40 21 408 1500"
+    }
+  }
+}
+``` 2025-05-06T12:05:27.448900700
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "produs": {
+    "nume": "Canapea extensibilă 3 locuri, catifea gri, Bellona Relax",
+    "pret": 2499.99,
+    "poza": "https://www.somproduct.ro/images/products/53571/very_large/canapea-extensibila-3-locuri-catifea-gri-bellona-relax_1.webp",
+    "furnizor": {
+      "nume": "SomProduct",
+      "adresa": "Str. Mihai Viteazu, nr. 2, Baia Mare, 430241, Maramures",
+      "contact": "0372.737.737"
+    }
+  }
+}
+``` 2025-05-06T12:07:39.723720
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "produs": {
+    "nume": "Masuta de cafea rotunda, lemn masiv acacia, finisaj nuc",
+    "pret": 459.99,
+    "poza": "https://www.mobexpert.ro/image/cache/catalog/products/living/masute/310910/masuta-cafea-rotunda-lemn-masiv-acacia-finisaj-nuc-6-1000x1000.jpg",
+    "furnizor": {
+      "nume": "Mobexpert",
+      "adresa": "Bulevardul Ghencea 45-47, București 061604, Romania",
+      "contact": "0800.010.020"
+    }
+  }
+}
+``` 2025-05-06T12:52:24.029410800
+-------------------------------------------------------------------- 

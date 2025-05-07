@@ -114,8 +114,7 @@ const SuppliersPage = () => {
   }
 
   return (
-    <Box sx={{ flexGrow: 1, bgcolor: 'grey.50', minHeight: '100vh' }}>
-      <Header categories={[]} activeCategory="" setActiveCategory={() => {}} />
+
 
       <Container maxWidth="lg" sx={{ py: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 2 }}>
@@ -188,7 +187,7 @@ const SuppliersPage = () => {
           ))}
         </Grid>
       </Container>
-    </Box>
+   
   );
 };
 

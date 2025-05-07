@@ -1,51 +1,50 @@
 import React from 'react';
-import { 
-  Container, 
-  Grid, 
-  Typography, 
-  Card, 
-  CardContent, 
-  CardMedia, 
+import {
+  Container,
+  Grid,
+  Typography,
+  Card,
+  CardContent,
+  CardMedia,
   Box,
   Button,
   useTheme
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import Header from './Header';
 import { getCategoryIcon } from './CategoryTabs';
 
 // Sample category data with image URLs
 const mainCategories = [
-  { 
-    name: 'Sofa', 
-    imageUrl: '/sofa.jpg', 
+  {
+    name: 'Sofa',
+    imageUrl: '/sofa.jpg',
     description: 'Comfortable seating for your living room',
-    featured: true 
+    featured: true
   },
-  { 
-    name: 'Chair', 
-    imageUrl: '/chair.jpg', 
-    description: 'Stylish seating options for every space' 
+  {
+    name: 'Chair',
+    imageUrl: '/chair.jpg',
+    description: 'Stylish seating options for every space'
   },
-  { 
-    name: 'Table', 
-    imageUrl: '/table.jpg', 
-    description: 'Dining and coffee tables for your home' 
+  {
+    name: 'Table',
+    imageUrl: '/table.jpg',
+    description: 'Dining and coffee tables for your home'
   },
-  { 
-    name: 'Bed', 
-    imageUrl: '/bed.jpg', 
-    description: 'Rest and relax with our comfortable beds' 
+  {
+    name: 'Bed',
+    imageUrl: '/bed.jpg',
+    description: 'Rest and relax with our comfortable beds'
   },
-  { 
-    name: 'Desk', 
-    imageUrl: '/desk.jpg', 
-    description: 'Spacious desks for storage' 
+  {
+    name: 'Desk',
+    imageUrl: '/desk.jpg',
+    description: 'Spacious desks for storage'
   },
-  { 
-    name: 'Shelf', 
-    imageUrl: '/shelf.jpg', 
-    description: 'Cabinets and shelves for organization' 
+  {
+    name: 'Shelf',
+    imageUrl: '/shelf.jpg',
+    description: 'Cabinets and shelves for organization'
   }
 ];
 
@@ -59,14 +58,12 @@ const HomePage = () => {
   };
 
   return (
-    <Box sx={{ flexGrow: 1, bgcolor: 'grey.50', minHeight: '100vh' }}>
-      <Header categories={[]} activeCategory="" setActiveCategory={() => {}} />
-
+    <Box sx={{ flexGrow: 1, bgcolor: 'grey.50' }}>
       {/* Hero Section */}
-      <Box 
-        sx={{ 
-          bgcolor: 'primary.main', 
-          color: 'white', 
+      <Box
+        sx={{
+          bgcolor: 'primary.main',
+          color: 'white',
           py: 8,
           position: 'relative',
           overflow: 'hidden',
@@ -84,13 +81,13 @@ const HomePage = () => {
               <Typography variant="h5" paragraph sx={{ mb: 4 }}>
                 Find the perfect pieces for your home with our curated selection
               </Typography>
-              <Button 
-                variant="contained" 
+              <Button
+                variant="contained"
                 color="secondary"
                 size="large"
                 onClick={() => navigate('/shop')}
-                sx={{ 
-                  px: 4, 
+                sx={{
+                  px: 4,
                   py: 1.5,
                   fontSize: '1.1rem',
                   boxShadow: theme.shadows[4]
@@ -115,11 +112,11 @@ const HomePage = () => {
         <Grid container spacing={4} sx={{ mt: 2 }}>
           {mainCategories.map((category) => (
             <Grid item key={category.name} xs={12} sm={6} md={4}>
-              <Card 
-                elevation={2} 
-                sx={{ 
-                  height: '100%', 
-                  display: 'flex', 
+              <Card
+                elevation={2}
+                sx={{
+                  height: '100%',
+                  display: 'flex',
                   flexDirection: 'column',
                   transition: '0.3s',
                   '&:hover': {
@@ -153,7 +150,7 @@ const HomePage = () => {
         </Grid>
       </Container>
 
-      {/* Call to action */}
+      {/* Call to Action */}
       <Box sx={{ bgcolor: 'grey.100', py: 6, mt: 6 }}>
         <Container maxWidth="md" sx={{ textAlign: 'center' }}>
           <Typography variant="h4" component="h2" gutterBottom>
@@ -162,8 +159,8 @@ const HomePage = () => {
           <Typography variant="body1" paragraph sx={{ mb: 4 }}>
             Browse our extensive collection of high-quality furniture from trusted suppliers
           </Typography>
-          <Button 
-            variant="contained" 
+          <Button
+            variant="contained"
             color="primary"
             size="large"
             onClick={() => navigate('/shop')}

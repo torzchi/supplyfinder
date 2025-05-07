@@ -3,7 +3,7 @@ import { Grid, Paper, Typography, Box, CircularProgress, Button } from '@mui/mat
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import ProductCard from './ProductCard';
 
-const ProductsGrid = ({ loading, error, filteredProducts, expandedProduct, toggleProductExpansion, onExtendedSearch, onExtendedAPISearch }) => {
+const ProductsGrid = ({ loading, error, filteredProducts, expandedProduct, toggleProductExpansion, onExtendedSearch, onExtendedAPISearch, APISearch }) => {
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', my: 8 }}>
@@ -14,8 +14,8 @@ const ProductsGrid = ({ loading, error, filteredProducts, expandedProduct, toggl
 
   if (error) {
     return (
-      <Paper 
-        elevation={0} 
+      <Paper
+        elevation={0}
         sx={{ p: 3, bgcolor: 'error.light', color: 'error.dark', borderRadius: 2 }}
       >
         <Typography>{error}</Typography>
@@ -38,18 +38,19 @@ const ProductsGrid = ({ loading, error, filteredProducts, expandedProduct, toggl
           <Button variant="contained" color="primary" onClick={onExtendedAPISearch} sx={{ ml: 2 }}>
             Extended API Search
           </Button>
-          
-          
+          <Button variant="contained" color="primary" onClick={APISearch} sx={{ ml: 2 }}>
+            Web Scrape
+          </Button>
         </Paper>
       </Grid>
     );
   }
 
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={4}>
       {filteredProducts.map((product) => (
-        <Grid item key={product.id} xs={12} sm={6} md={4}>
-          <ProductCard 
+        <Grid item key={product.id} xs={12} sm={6} md={6} lg={4} sx={{ height: '100%' }}>
+          <ProductCard
             product={product}
             expandedProduct={expandedProduct}
             toggleProductExpansion={toggleProductExpansion}

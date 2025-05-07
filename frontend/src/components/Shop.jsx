@@ -147,6 +147,57 @@ const FurnitureMarketplace = () => {
     fetchProducts();
   }, [activeCategory]);
 
+  const APISearch = async () => {
+    try {
+      setLoading(true);
+
+      const query = encodeURIComponent(searchTerm);
+      const apiUrl = `http://localhost:8080/api/searching/${query}`;
+
+      const response = await fetch(apiUrl);
+      if (!response.ok) throw new Error('Extended API search failed');
+
+      const data = await response.json();
+
+      console.log("search term:", searchTerm);
+      console.log("Extended search response:", data);
+
+      const productsList = data.map(item => ({
+        id: Date.now() + Math.random(), // Temporary unique ID
+        name: item.nume,
+        imageUrl: item.poza,
+        climateFriendly: false,
+        category: getCategoryFromName(item.nume),
+        suppliers: [
+          {
+            name: item.furnizor.nume,
+            address: item.furnizor.adresa,
+            url : item.url,
+            price: parsePrice(item.pret),
+            country: 'Romania',
+            condition: 'New',
+            contact: item.furnizor.contact
+          }
+        ]
+      }));
+
+      // Set the extended search results directly
+      setExtendedSearchResults(productsList);
+
+      // Flag that extended search was performed
+      setExtendedSearchPerformed(true);
+
+      // Reset the category filters
+      setActiveCategory('All');
+
+    } catch (err) {
+      console.error('Error in extended API search:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const onExtendedApiSearch = async () => {
     try {
       setLoading(true);
@@ -281,14 +332,9 @@ const FurnitureMarketplace = () => {
   };
 
   return (
-    <Box sx={{ flexGrow: 1, bgcolor: 'grey.50', minHeight: '100vh' }}>
-      <Header
-        categories={categories}
-        activeCategory={activeCategory}
-        setActiveCategory={handleCategoryChange}
-      />
+   
 
-      <Container maxWidth="lg" sx={{ py: 2 }}>
+      <Container maxWidth="xl" sx={{ py: 2 }}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={3}>
             <FilterPanel 
@@ -353,13 +399,14 @@ const FurnitureMarketplace = () => {
                   toggleProductExpansion={toggleProductExpansion}
                   onExtendedSearch={onExtendedSearch}
                   onExtendedAPISearch={onExtendedApiSearch}
+                  APISearch={APISearch}
                 />
               </>
             )}
           </Grid>
         </Grid>
       </Container>
-    </Box>
+    
   );
 };
 

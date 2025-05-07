@@ -21,33 +21,35 @@ const Header = ({ categories, activeCategory, setActiveCategory }) => {
 
   return (
     <AppBar position="static" color="primary" elevation={2}>
-      <Toolbar>
+      <Toolbar sx={{ justifyContent: 'space-between' }}>
         <Typography
           variant="h5"
           noWrap
           component="div"
-          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, fontWeight: 'bold' }}
+          sx={{ display: { xs: 'none', sm: 'block' }, fontWeight: 'bold' }}
         >
-          ModernHaus
+          SupplyFinder
         </Typography>
 
-        <Box sx={{ width: { xs: '100%', sm: '50%' }, ml: { sm: 2 }, display: 'flex', alignItems: 'center' }}>
-          <InputBase
-            placeholder="Search products..."
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={handleKeyDown}
-            sx={{
-              bgcolor: 'white',
-              px: 2,
-              py: 0.5,
-              borderRadius: 2,
-              flexGrow: 1,
-            }}
-          />
-          <IconButton onClick={handleSearch} sx={{ ml: 1, bgcolor: 'white', borderRadius: 2 }}>
-            <SearchIcon />
-          </IconButton>
+        <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Box sx={{ width: { xs: '100%', sm: '50%' }, display: 'flex', alignItems: 'center' }}>
+            <InputBase
+              placeholder="Search products..."
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={handleKeyDown}
+              sx={{
+                bgcolor: 'white',
+                px: 2,
+                py: 0.5,
+                borderRadius: 2,
+                flexGrow: 1,
+              }}
+            />
+            <IconButton onClick={handleSearch} sx={{ ml: 1, bgcolor: 'white', borderRadius: 2 }}>
+              <SearchIcon />
+            </IconButton>
+          </Box>
         </Box>
 
         <Box sx={{ display: { xs: 'none', md: 'flex' } }} />

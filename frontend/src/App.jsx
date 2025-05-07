@@ -2,9 +2,10 @@ import React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Box } from '@mui/material';
-import { BrowserRouter, Routes, Route, Outlet, Navigate} from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet, Navigate } from 'react-router-dom';
 
-import Sidebar from './components/Sidebar';
+import Header from './components/Header'; // Import the Header component
+import Sidebar from './components/Navbar';
 import GeminiChat from './components/GeminiChat';
 import CypherForm from './components/CypherForm';
 import Shop from './components/Shop';
@@ -42,10 +43,11 @@ const theme = createTheme({
 
 const AppLayout = () => {
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', m: 0, p: 0 }}>
+      <Header />
       <Sidebar />
       <Box component="main" sx={{ flexGrow: 1, p: 0 }}>
-        <Outlet /> {/* This renders the matched child route */}
+        <Outlet />
       </Box>
     </Box>
   );
@@ -57,7 +59,7 @@ const App = () => {
       <CssBaseline />
       <BrowserRouter>
         <Routes>
-          {/* Main layout route that contains Sidebar */}
+          {/* Main layout route that contains Header and Sidebar */}
           <Route element={<AppLayout />}>
             {/* Index route (default when path is '/') */}
             <Route index element={<GeminiChat />} />
