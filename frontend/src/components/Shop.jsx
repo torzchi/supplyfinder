@@ -332,26 +332,14 @@ const FurnitureMarketplace = () => {
   };
 
   return (
-   
-
+    <Box sx={{ flexGrow: 1, bgcolor: 'grey.50', minHeight: '100vh' }}>
       <Container maxWidth="xl" sx={{ py: 2 }}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={3}>
             <FilterPanel 
-              categories={categories.filter(c => c !== 'All')}
-              activeCategories={activeCategories}
-              setActiveCategories={(cats) => {
-                setActiveCategories(cats);
-                handleFilterChange();
-              }}
               priceRange={priceRange}
               setPriceRange={(range) => {
                 setPriceRange(range);
-                handleFilterChange();
-              }}
-              showEcoFriendly={showEcoFriendly}
-              setShowEcoFriendly={(eco) => {
-                setShowEcoFriendly(eco);
                 handleFilterChange();
               }}
               disabled={extendedSearchPerformed}
@@ -406,7 +394,7 @@ const FurnitureMarketplace = () => {
           </Grid>
         </Grid>
       </Container>
-    
+    </Box>
   );
 };
 
