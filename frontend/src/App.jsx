@@ -11,6 +11,7 @@ import CypherForm from './components/CypherForm';
 import Shop from './components/Shop';
 import Homepage from './components/Homepage';
 import SuppliersPage from './components/SuppliersPage';
+import AddProductForm from './components/AddProductForm';
 
 const theme = createTheme({
   palette: {
@@ -62,13 +63,14 @@ const App = () => {
           {/* Main layout route that contains Header and Sidebar */}
           <Route element={<AppLayout />}>
             {/* Index route (default when path is '/') */}
-            <Route index element={<GeminiChat />} />
+            <Route index element={<Homepage />} />
             {/* Other routes */}
             <Route path="chat" element={<GeminiChat />} />
             <Route path="cypher" element={<CypherForm />} />
             <Route path="shop" element={<Shop />} />
             <Route path="home" element={<Homepage />} />
             <Route path="suppliers" element={<SuppliersPage />} />
+            <Route path="add-product" element={<AddProductForm />} />
             {/* Optional: 404 catch-all route */}
             <Route path="*" element={<Navigate to="/home" replace />} />
           </Route>

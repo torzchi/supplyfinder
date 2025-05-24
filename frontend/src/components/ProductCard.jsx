@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Card,
   CardContent,
@@ -7,14 +7,20 @@ import {
   Box,
   Chip,
   Button,
-  CardActions
+  CardActions,
+  IconButton,
+  Tooltip
 } from '@mui/material';
 import EcoIcon from '@mui/icons-material/Recycling';
 import BusinessIcon from '@mui/icons-material/Business';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { getCategoryIcon } from './CategoryTabs';
 import SuppliersList from './SuppliersList';
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, isScraped = false }) => {
+  const [isSaved, setIsSaved] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const lowestPrice = Math.min(...product.suppliers.map(s => s.price));
 
   const handleViewDetails = () => {
@@ -33,11 +39,53 @@ const ProductCard = ({ product }) => {
     document.body.removeChild(link);
   };
 
+  const handleSaveToDatabase = async () => {
+    if (!isScraped || isSaved) return;
+    
+    try {
+      setIsSaving(true);
+      const supplier = product.suppliers[0];
+      const productUrl = supplier.url || '';
+      
+      const cypherQuery = `
+        MERGE (l:Locatie {country: '${supplier.country || 'Unknown'}'})
+        MERGE (f:Furnizor {name: '${supplier.name}'})
+        ON CREATE SET f.address = '${supplier.address || ''}', f.contact = '${supplier.contact || ''}', f.rating = ${parseFloat(supplier.rating) || 0}
+        MERGE (f)-[:LOCATED_IN]->(l)
+        CREATE (p:Produs {
+          name: '${product.name}',
+          category: '${product.category}',
+          photo: '${product.imageUrl}',
+          climateFriendly: ${product.climateFriendly || false},
+          url: '${productUrl}'
+        })
+        CREATE (f)-[:PROVIDE {price: '${supplier.price}', condition: 'New'}]->(p)
+        RETURN p
+      `;
+
+      const response = await fetch('http://localhost:8080/api/cypher/execute', {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: cypherQuery,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save product');
+      }
+
+      setIsSaved(true);
+    } catch (error) {
+      console.error('Error saving product:', error);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
     <Card
       elevation={3}
       sx={{
-        height: '800px', // Fixed height for all cards
+        height: '800px',
         display: 'flex',
         flexDirection: 'column',
         transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
@@ -47,23 +95,48 @@ const ProductCard = ({ product }) => {
         }
       }}
     >
-      <CardMedia
-        component="img"
-        sx={{
-          width: "100%",
-          height: 400,
-          objectFit: 'fill'
-        }}
-        image={product.imageUrl}
-        alt={product.name}
-      />
+      <Box sx={{ position: 'relative' }}>
+        <CardMedia
+          component="img"
+          sx={{
+            width: "100%",
+            height: 400,
+            objectFit: 'fill'
+          }}
+          image={product.imageUrl}
+          alt={product.name}
+        />
+        {isScraped && (
+          <Tooltip title={isSaved ? "Saved to database" : "Save to database"}>
+            <IconButton
+              onClick={handleSaveToDatabase}
+              disabled={isSaving || isSaved}
+              sx={{
+                position: 'absolute',
+                top: 8,
+                right: 8,
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 1)',
+                }
+              }}
+            >
+              {isSaved ? (
+                <FavoriteIcon color="error" />
+              ) : (
+                <FavoriteBorderIcon color="error" />
+              )}
+            </IconButton>
+          </Tooltip>
+        )}
+      </Box>
       <CardContent sx={{ 
         flexGrow: 1, 
         px: 3, 
         py: 2,
         display: 'flex',
         flexDirection: 'column',
-        height: 'calc(100% - 400px - 72px)', // Subtract image height and button height
+        height: 'calc(100% - 400px - 72px)',
         overflow: 'hidden'
       }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
@@ -89,7 +162,7 @@ const ProductCard = ({ product }) => {
         </Box>
 
         <Typography variant="h5" color="primary.main" sx={{ mt: 2, fontWeight: 500 }}>
-          From ${lowestPrice.toFixed(2)}
+          From {lowestPrice.toFixed(2)} lei
         </Typography>
 
         <Box sx={{ mt: 2, display: 'flex', alignItems: 'center', gap: 1 }}>

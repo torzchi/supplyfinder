@@ -7,6 +7,7 @@ import CodeIcon from '@mui/icons-material/Code';
 import HomeIcon from '@mui/icons-material/Home';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const NavItem = styled(Link)(({ theme, active }) => ({
   display: 'flex',
@@ -33,6 +34,7 @@ const Navbar = () => {
     { text: 'Cypher Query', icon: <CodeIcon fontSize="small" />, path: '/cypher' },
     { text: 'Suppliers', icon: <CodeIcon fontSize="small" />, path: '/suppliers' },
     { text: 'Shop', icon: <ShoppingCartIcon fontSize="small" />, path: '/shop' },
+    { text: 'Add Product', icon: <AddCircleIcon fontSize="small" />, path: '/add-product' },
   ];
 
   return (

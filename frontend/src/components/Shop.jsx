@@ -72,6 +72,7 @@ const FurnitureMarketplace = () => {
             r.condition AS supplierCondition,
             p.photo AS photo,
             p.climateFriendly AS climateFriendly,
+            p.url AS url,
             id(p) AS id,
             f.name AS supplierName,
             f.address AS address,
@@ -126,7 +127,8 @@ const FurnitureMarketplace = () => {
             price: parsePrice(record.supplierPrice),
             condition: record.supplierCondition,
             address: record.address || 'Unknown',
-            country: record.country || 'Unknown'
+            country: record.country || 'Unknown',
+            url: record.url || null
           });
         });
 
@@ -333,63 +335,35 @@ const FurnitureMarketplace = () => {
 
   return (
     <Box sx={{ flexGrow: 1, bgcolor: 'grey.50', minHeight: '100vh' }}>
-      <Container maxWidth="xl" sx={{ py: 2 }}>
+      <Container maxWidth="xl" sx={{ py: 4 }}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={3}>
-            <FilterPanel 
+            <FilterPanel
               priceRange={priceRange}
-              setPriceRange={(range) => {
-                setPriceRange(range);
-                handleFilterChange();
-              }}
-              disabled={extendedSearchPerformed}
+              setPriceRange={setPriceRange}
+              disabled={loading}
+              onExtendedSearch={onExtendedSearch}
+              onExtendedApiSearch={onExtendedApiSearch}
+              onAPISearch={APISearch}
             />
           </Grid>
-
           <Grid item xs={12} md={9}>
             {loading ? (
               <MarketplaceSkeleton />
+            ) : error ? (
+              <Typography color="error" align="center">
+                Error: {error}
+              </Typography>
             ) : (
-              <>
-                <Box sx={{ mb: 3 }}>
-                  <Typography variant="h5" component="h1" fontWeight={600}>
-                    {extendedSearchPerformed ? 'Extended Search Results' : (
-                      <>
-                        {displayProducts.length} Product{displayProducts.length !== 1 ? 's' : ''} Found
-                        {activeCategory !== 'All' && !extendedSearchPerformed && ` in ${activeCategory}`}
-                      </>
-                    )}
-                  </Typography>
-                  {extendedSearchPerformed && (
-                    <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                      Showing custom results for "{searchTerm}". 
-                      <Box component="span" 
-                        sx={{ 
-                          color: 'primary.main', 
-                          textDecoration: 'underline', 
-                          cursor: 'pointer',
-                          ml: 1
-                        }}
-                        onClick={() => {
-                          setExtendedSearchPerformed(false);
-                          setExtendedSearchResults(null);
-                        }}
-                      >
-                        Return to regular search
-                      </Box>
-                    </Typography>
-                  )}
-                </Box>
-                <ProductsGrid 
-                  error={error}
-                  filteredProducts={displayProducts}
-                  expandedProduct={expandedProduct}
-                  toggleProductExpansion={toggleProductExpansion}
-                  onExtendedSearch={onExtendedSearch}
-                  onExtendedAPISearch={onExtendedApiSearch}
-                  APISearch={APISearch}
-                />
-              </>
+              <ProductsGrid
+                filteredProducts={extendedSearchPerformed ? extendedSearchResults : displayProducts}
+                expandedProduct={expandedProduct}
+                toggleProductExpansion={toggleProductExpansion}
+                onExtendedSearch={onExtendedSearch}
+                onExtendedAPISearch={onExtendedApiSearch}
+                APISearch={APISearch}
+                isScraped={extendedSearchPerformed}
+              />
             )}
           </Grid>
         </Grid>

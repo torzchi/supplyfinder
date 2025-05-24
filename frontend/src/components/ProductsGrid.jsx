@@ -3,7 +3,7 @@ import { Grid, Paper, Typography, Box, CircularProgress, Button } from '@mui/mat
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import ProductCard from './ProductCard';
 
-const ProductsGrid = ({ loading, error, filteredProducts, expandedProduct, toggleProductExpansion, onExtendedSearch, onExtendedAPISearch, APISearch }) => {
+const ProductsGrid = ({ loading, error, filteredProducts, expandedProduct, toggleProductExpansion, onExtendedSearch, onExtendedAPISearch, APISearch, isScraped }) => {
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', my: 8 }}>
@@ -54,6 +54,7 @@ const ProductsGrid = ({ loading, error, filteredProducts, expandedProduct, toggl
             product={product}
             expandedProduct={expandedProduct}
             toggleProductExpansion={toggleProductExpansion}
+            isScraped={isScraped}
           />
         </Grid>
       ))}

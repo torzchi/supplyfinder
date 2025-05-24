@@ -2215,3 +2215,458 @@ Nu pot genera JSON fără a cunoaște produsul pe care îl cauți. Te rog să-mi
 }
 ``` 2025-05-07T19:04:54.341514300
 -------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "produs": {
+    "nume": "Scaun dining tapițat catifea verde smarald, picioare negre metalice",
+    "pret": 249.99,
+    "poza": "https://www.somproduct.ro/media/catalog/product/cache/4b69f19c20ff580154e51e5f5d594c69/s/c/scaun-de-dining-tapitat-cu-catifea-verde-smarald-cu-picioare-negre-din-metal-romina-4603.jpg",
+    "furnizor": {
+      "nume": "SomProduct",
+      "adresa": "Str. Avram Iancu, nr. 27, Baia Mare, Romania",
+      "contact": "+40371.069.999"
+    }
+  }
+}
+``` 2025-05-12T22:58:49.308285900
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "produs": {
+    "nume": "Birou reglabil electric FlexiSpot E7",
+    "pret": 1999.99,
+    "poza": "https://m.media-amazon.com/images/I/711oD+YmOqL._AC_SL1500_.jpg",
+    "furnizor": {
+      "nume": "FlexiSpot",
+      "adresa": "6225 Jarvis Ave, Newark, CA 94560, Statele Unite",
+      "contact": "support@flexispot.com"
+    }
+  }
+}
+``` 2025-05-13T10:58:47.126805200
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+Din păcate, accesul meu la informații în timp real este limitat și nu pot oferi cele mai recente știri despre JYSK din ultimele minute. Cu toate acestea, pot să-ți sugerez câteva modalități de a găsi informații actualizate:
+
+*   **Site-ul oficial JYSK:** Secțiunea de presă sau știri a site-ului JYSK este o sursă excelentă pentru anunțuri oficiale, comunicate de presă și actualizări despre companie.
+*   **Google News sau alte agregatoare de știri:** Caută "JYSK news" pe Google News sau pe alte platforme de agregare a știrilor pentru a vedea articole recente din diverse surse de știri.
+*   **Publicații de retail și business:** Urmărește publicații specializate în retail, afaceri și economie, deoarece acestea acoperă adesea știri despre companii importante precum JYSK.
+*   **Rețelele sociale:** Urmărește JYSK pe rețelele sociale (Facebook, Instagram, LinkedIn, etc.) pentru anunțuri și actualizări rapide.
+
+**Câteva exemple de tipuri de știri care ar putea fi interesante despre JYSK:**
+
+*   **Expansiune:** Deschiderea de noi magazine, intrarea pe piețe noi.
+*   **Rezultate financiare:** Rapoarte despre vânzări, profituri și performanța generală a companiei.
+*   **Inovații:** Lansarea de noi produse, tehnologii sau concepte de magazine.
+*   **Sustenabilitate:** Inițiative de mediu și sociale.
+*   **Parteneriate:** Colaborări cu alte companii sau organizații.
+*   **Schimbări de conducere:** Numiri sau plecări ale unor directori importanți.
+*   **Oferte și promoții speciale:** (Deși nu sunt neapărat "știri", sunt informații interesante pentru clienți).
+
+Sper că aceste sugestii te ajută să găsești cele mai recente informații despre JYSK! 2025-05-13T23:15:24.600575400
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+Hello! How can I help you today? 2025-05-13T23:30:50.568619700
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+Iată un rezumat al știrilor și o evaluare a impactului general:
+
+**Rezumat:**
+
+*   **Expansiune JYSK:** JYSK continuă să se extindă în România, deschizând un magazin nou în Mamaia, ajungând la un total de 150 de unități în țară.
+*   **Implicare socială:** JYSK sprijină comunitatea prin mobilarea a două case de tip familial construite de Hope and Homes for Children România.
+*   **Amenda:** JYSK a primit o amendă de 10.000 de lei pentru o încălcare la magazinul din Târgoviște (nu se specifică natura încălcării).
+
+**Impact General:**
+
+Per total, impactul pare a fi **pozitiv**. Expansiunea JYSK creează locuri de muncă și oferă consumatorilor mai multe opțiuni de cumpărare. Implicarea în proiecte sociale, cum ar fi sprijinirea Hope and Homes for Children, contribuie la bunăstarea comunității. Amenda, deși negativă, este un incident singular și nu pare să afecteze imaginea generală pozitivă a companiei. 2025-05-13T23:31:59.380859700
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+Iată un rezumat al știrilor, cu o analiză a impactului și un scor de pozitivitate:
+
+**1. JYSK deschide un magazin în Mamaia și ajunge la 150 de unități în România:**
+
+*   **Rezumat:** JYSK continuă expansiunea în România prin deschiderea unui nou magazin în Mamaia, atingând un total de 150 de unități în țară.
+*   **Impact:** Pozitiv. Expansiunea creează locuri de muncă, oferă consumatorilor mai multe opțiuni de cumpărare și indică o creștere economică a companiei și, potențial, a zonei.
+*   **Scor de pozitivitate:** 80/100
+
+**2. JYSK mobilează două noi case de tip familial construite de Hope and Homes for Children România:**
+
+*   **Rezumat:** JYSK se implică în responsabilitatea socială prin donarea de mobilier pentru două case de tip familial construite de organizația Hope and Homes for Children.
+*   **Impact:** Pozitiv. Această acțiune filantropică îmbunătățește viața copiilor defavorizați și demonstrează angajamentul social al companiei.
+*   **Scor de pozitivitate:** 95/100
+
+**3. 10.000 de lei amendă pentru Jysk Târgoviște:**
+
+*   **Rezumat:** JYSK Târgoviște a fost amendată cu 10.000 de lei, probabil pentru nereguli în activitate (știrile nu specifică motivul).
+*   **Impact:** Negativ. O amendă indică o problemă de conformitate și poate afecta reputația companiei.
+*   **Scor de pozitivitate:** 20/100
+
+**Scor general de pozitivitate:**
+
+Pentru a calcula un scor general, putem face o medie ponderată, ținând cont de importanța fiecărei știri:
+
+*   (80 + 95 + 20) / 3 = 65
+
+**Concluzie:**
+
+În ansamblu, impactul știrilor despre JYSK este **ușor pozitiv**. Deși amenda este un aspect negativ, expansiunea companiei și implicarea în proiecte sociale contribuie la o imagine generală favorabilă. 2025-05-13T23:32:53.846727500
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "stiri": [
+    {
+      "titlu": "JYSK deschide un magazin în Mamaia și ajunge la 150 de unități în România",
+      "impact": "pozitiv",
+      "scor_pozitivitate": 85
+    },
+    {
+      "titlu": "JYSK mobilează două noi case de tip familial construite de Hope and Homes for Children România",
+      "impact": "pozitiv",
+      "scor_pozitivitate": 95
+    },
+    {
+      "titlu": "10.000 de lei amendă pentru Jysk Târgoviște",
+      "impact": "negativ",
+      "scor_pozitivitate": 20
+    }
+  ],
+  "impact_general": "pozitiv",
+  "scor_pozitivitate_general": 67
+}
+``` 2025-05-13T23:37:49.671343
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+Îmi pare rău, dar nu sunt sigur ce vrei să spui. Poți reformula? 2025-05-20T00:16:46.486104400
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+Îmi pare rău, dar nu am găsit nicio dovadă că Jysk promovează aparate de păcănele pentru copii. 2025-05-20T00:18:17.822008600
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+Din păcate, nu am acces la informații în timp real despre amenzile aplicate companiilor.  
+
+Pentru a afla motivul pentru care JYSK a fost amendată cu 20.000 de lei, vă sugerez următoarele:
+
+* **Contactați JYSK direct:**  Puteți încerca să contactați departamentul de relații cu publicul al JYSK și să întrebați despre amenda.
+* **Căutați în presa locală/națională:**  Este posibil ca știrea să fi apărut în ziarele locale sau naționale, mai ales dacă este vorba de o amendă semnificativă.
+* **Verificați site-urile instituțiilor publice relevante:**  Depinde de motivul amenzii.  De exemplu, dacă este legată de protecția consumatorilor, verificați site-ul ANPC (Autoritatea Națională pentru Protecția Consumatorilor). Dacă este legată de protecția datelor, verificați site-ul ANSPDCP (Autoritatea Națională de Supraveghere a Prelucrării Datelor cu Caracter Personal).
+* **Google Search:**  Utilizați Google cu termeni specifici, cum ar fi "JYSK amendă 20000 lei" și perioada relevantă (dacă o cunoașteți).
+
+Sper că aceste sugestii vă vor ajuta să aflați mai multe informații! 2025-05-20T00:18:39.632603600
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T00:20:58.971162300
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+{
+"rating": 85
+} 2025-05-20T00:21:51.917619500
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 75
+}
+``` 2025-05-20T00:24:10.598988500
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+{
+"rating": 85
+} 2025-05-20T00:24:16.369384
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T00:24:22.195063500
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+{ "rating" : 20 } 2025-05-20T00:24:28.026150700
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 90
+}
+``` 2025-05-20T00:24:33.817861900
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+{"rating": 85} 2025-05-20T00:29:12.293203900
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T00:29:14.434826400
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+{"rating": 85} 2025-05-20T00:31:53.410849500
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T00:31:59.257482200
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T00:32:04.990091
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+"rating": 20
+}
+``` 2025-05-20T00:32:10.795400700
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 90
+}
+``` 2025-05-20T00:32:16.714042
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+{"rating": 85} 2025-05-20T00:33:58.610864200
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T00:34:04.464498300
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T00:34:10.223869200
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 20
+}
+``` 2025-05-20T00:34:16.070140400
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T00:34:18.504790600
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 90
+}
+``` 2025-05-20T00:34:21.646083900
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T00:34:23.918288500
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T00:34:29.846735800
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 20
+}
+``` 2025-05-20T00:34:35.694120900
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 90
+}
+``` 2025-05-20T00:34:41.620540100
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T13:46:57.606381100
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+{"rating": 65} 2025-05-20T13:47:03.525394100
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T13:47:09.441884300
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+{"rating": 90} 2025-05-20T13:47:15.193404600
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T13:48:18.124735400
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T13:48:23.765392
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T13:48:29.472738700
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 20
+}
+``` 2025-05-20T13:48:35.244393100
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T13:49:05.311212800
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T13:49:11.170425300
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T13:49:16.935099400
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 20
+}
+``` 2025-05-20T13:49:22.857264300
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+{"rating": 90} 2025-05-20T13:49:28.611992700
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T14:22:18.745211800
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T14:22:24.673251700
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T14:22:30.508510500
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 20
+}
+``` 2025-05-20T14:22:36.420367500
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+{"rating": 85} 2025-05-20T14:22:38.182618600
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+"rating": 90
+}
+``` 2025-05-20T14:22:41.999144300
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T14:22:43.667175600
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-05-20T14:22:49.592186500
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 20
+}
+``` 2025-05-20T14:22:55.267045400
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 90
+}
+``` 2025-05-20T14:23:01.199624200
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+MATCH (p:Produs {name: "scaun ergonomic negru"})
+RETURN p.name, p.photo 2025-05-21T21:34:43.835247300
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+MATCH (p:Produs {name: "scaun ergonomic negru"})
+RETURN p.name, p.photo 2025-05-21T21:36:04.460752
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+MATCH (p:Produs {name: "scaun ergonomic negru"})
+RETURN p.name, p.photo 2025-05-21T21:36:55.893963400
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+MATCH (p:Produs {name: "canapea neagra extensibila"})
+RETURN p.name, p.photo 2025-05-21T21:37:06.419702700
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+MATCH (p:Produs {name: "canapea neagra extensibila"})
+RETURN p 2025-05-21T21:37:59.382279300
+-------------------------------------------------------------------- 

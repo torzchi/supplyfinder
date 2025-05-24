@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { getCategoryIcon } from './CategoryTabs';
+import SupplierNews from './SupplierNews';
 
 // Sample category data with image URLs
 const mainCategories = [
@@ -148,6 +149,11 @@ const HomePage = () => {
             </Grid>
           ))}
         </Grid>
+      </Container>
+
+      {/* Supplier News Section */}
+      <Container maxWidth="lg" sx={{ mt: 8, mb: 4 }}>
+        <SupplierNews />
       </Container>
 
       {/* Call to Action */}

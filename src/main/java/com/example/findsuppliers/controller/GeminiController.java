@@ -51,11 +51,12 @@ public class GeminiController {
 //                "Produsul căutat este" + prompt;
         // Prepare request payload
 
-        prompt = "Rol: Asistent designer interior. Caută online produsul: " + prompt +
-                ". Returnează *doar* JSON brut (fără ```json) cu informații actuale: " +
-                "trebuie sa arate asa: {produs {nume,pret, poza, furnizor {nume, adresa, contact}} returneaza doar 1 produs " +
-                "nume furnizor (produs.furnizor.contact) și adresă furnizor (produs.furnizor.adresa). " +
-                "Verifică existența produsului și a pozei. ASIGURA TE CA DATELE SUNT REALE";
+//        prompt = "Rol: Asistent designer interior. Caută online produsul: " + prompt +
+//                ". Returnează *doar* JSON brut (fără ```json) cu informații actuale: " +
+//                "trebuie sa arate asa: {produs {nume,pret, poza, furnizor {nume, adresa, contact}} returneaza doar 1 produs " +
+//                "nume furnizor (produs.furnizor.contact) și adresă furnizor (produs.furnizor.adresa). " +
+//                "Verifică existența produsului și a pozei. ASIGURA TE CA DATELE SUNT REALE";
+       // prompt = "Ultimele stiri interesante despre compania " + prompt;
         String requestBody = "{ \"contents\": [{ \"parts\": [{ \"text\": \""  + prompt + "\" }]}]}";
 
         // Set headers
@@ -100,6 +101,79 @@ public class GeminiController {
             return text;
         } catch (IOException e) {
             return "Error parsing response";
+        }
+    }
+    @GetMapping("/positivity")
+    public ResponseEntity<String> generateReport(@RequestParam String prompt) {
+        String url = GEMINI_API_URL + geminiApiKey;
+
+//        prompt = "Generează cod Cypher conform următoarei structuri a bazei de date: \n" +
+//        "CREATE ()<-[:FOUND_IN]-(Furnizor)-[:PROVIDE]->(Produs)-[:PART_OF]->(), \n" +
+//                "(Stil)<-[:HAS_STYLE]-(Produs)-[:FOUND_IN]->()-[:HAS_STYLE]->(Stil), \n" +
+//               "()<-[:_RELATED]-(Client)<-[:CONTACT]-(Furnizor)<-[:CONTACT]-(Client)-[:BOUGHT|INTERESTED]->(Produs)-[:RELATED]->(Produs). foloseste numele la proprietati in engleza (name, price, description) dar nodurile generale in romana ca in schema descrisa \n" +
+//                "Respectă schema existentă și folosește noduri deja create acolo unde este posibil. Creează nodurile necesare pentru produsul căutat, utilizând relațiile corespunzătoare.\n" +
+//        "Nu adăuga explicații, comentarii sau return la final. Omite delimitatorii de cod cypher ." +
+//                "Produsul căutat este" + prompt;
+        // Prepare request payload
+
+//        prompt = "Rol: Asistent designer interior. Caută online produsul: " + prompt +
+//                ". Returnează *doar* JSON brut (fără ```json) cu informații actuale: " +
+//                "trebuie sa arate asa: {produs {nume,pret, poza, furnizor {nume, adresa, contact}} returneaza doar 1 produs " +
+//                "nume furnizor (produs.furnizor.contact) și adresă furnizor (produs.furnizor.adresa). " +
+//                "Verifică existența produsului și a pozei. ASIGURA TE CA DATELE SUNT REALE";
+        prompt = prompt + ".Acesta este titlul unei stiri, tu trebuie sa determini daca acesta are un impact pozitiv sau negativ. Trebuie sa ii acorzi un scor de pozitivitate, cuprins intre 1-100 in functie de impact, raspunde doar cu JSON care cuprinde {rating : scor }";
+        String requestBody = "{ \"contents\": [{ \"parts\": [{ \"text\": \""  + prompt + "\" }]}]}";
+
+        // Set headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+
+
+
+
+        // Make HTTP request
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<String> request = new HttpEntity<>(requestBody, headers);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
+
+        String extractedText = extractText(response.getBody());
+        logsService.logResponse(extractedText);
+        try {
+            // List<Map<String, Object>> queryResult = cypherService.executeQuery(extractedText);
+            return ResponseEntity.ok(extractedText);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error executing query: " + e.getMessage());
+        }
+    }
+
+
+
+    @GetMapping("/language")
+    public ResponseEntity<String> generateQuery(@RequestParam String prompt) {
+        String url = GEMINI_API_URL + geminiApiKey;
+
+        prompt = "Trebuie sa generezi un cypher din limbaj natural, baza de data este graf este structurata astfel: avem nodurile Produs cu campurile name, si photo, avem nodurile Furnizor cu campurile name si address, iar relatia dintre ele este PROVIDE, pe care se afla price, DECI Furnizor PROVIDE Produs, tu trebuie sa generezi cod CYPHER pentru urmatorul produs " + prompt + " raspunde doar cu codul si nimic altceva";
+        String requestBody = "{ \"contents\": [{ \"parts\": [{ \"text\": \""  + prompt + "\" }]}]}";
+
+        // Set headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+
+
+
+
+        // Make HTTP request
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<String> request = new HttpEntity<>(requestBody, headers);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
+
+        String extractedText = extractText(response.getBody());
+        logsService.logResponse(extractedText);
+        try {
+            // List<Map<String, Object>> queryResult = cypherService.executeQuery(extractedText);
+            return ResponseEntity.ok(extractedText);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error executing query: " + e.getMessage());
         }
     }
 

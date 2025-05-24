@@ -72,7 +72,7 @@ const SuppliersList = ({ suppliers }) => {
                       {supplier.name}
                     </Typography>
                     <Typography variant="subtitle2" color="primary.main" sx={{ fontWeight: 600, fontSize: '0.875rem' }}>
-                      ${supplier.price.toFixed(2)}
+                      {supplier.price.toFixed(2)} lei
                     </Typography>
                   </Box>
                 }
