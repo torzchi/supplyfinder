@@ -8,6 +8,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AssistantIcon from '@mui/icons-material/Assistant';
 
 const NavItem = styled(Link)(({ theme, active }) => ({
   display: 'flex',
@@ -30,11 +31,13 @@ const Navbar = () => {
 
   const menuItems = [
     { text: 'Home', icon: <HomeIcon fontSize="small" />, path: '/home' },
-    { text: 'Gemini Chat', icon: <ChatIcon fontSize="small" />, path: '/chat' },
+    { text: 'Assistant', icon: <AssistantIcon fontSize="small" />, path: '/assistant' },
     { text: 'Cypher Query', icon: <CodeIcon fontSize="small" />, path: '/cypher' },
     { text: 'Suppliers', icon: <CodeIcon fontSize="small" />, path: '/suppliers' },
     { text: 'Shop', icon: <ShoppingCartIcon fontSize="small" />, path: '/shop' },
     { text: 'Add Product', icon: <AddCircleIcon fontSize="small" />, path: '/add-product' },
+    
+    
   ];
 
   return (

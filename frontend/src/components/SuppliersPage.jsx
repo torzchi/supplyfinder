@@ -16,16 +16,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
-
-// 🔤 Helper: Convert last 2 letters of address to flag emoji
-const getFlagEmoji = (countryCode) => {
-  if (!countryCode || countryCode.length !== 2) return '';
-  return countryCode
-    .toUpperCase()
-    .replace(/./g, char => 
-      String.fromCodePoint(127397 + char.charCodeAt())
-    );
-};
+import ReactCountryFlag from "react-country-flag";
 
 const SuppliersPage = () => {
   const [suppliers, setSuppliers] = useState([]);
@@ -63,18 +54,25 @@ const SuppliersPage = () => {
 
         const formattedSuppliers = data.map(supplier => {
           const address = supplier.address || '';
-          const countryCode = address.slice(-2).toUpperCase();
+          const countryCode = address.trim().slice(-2).toUpperCase();
+          
+          // Validate country code (must be letters)
+          const isValidCountryCode = /^[A-Z]{2}$/.test(countryCode);
 
           return {
             name: supplier.name,
             address,
             productCount: supplier.productCount,
             rating: supplier.rating ? parseFloat(supplier.rating).toFixed(1) : 'N/A',
-            countryCode
+            countryCode: isValidCountryCode ? countryCode : ''
           };
         });
 
-        const countries = [...new Set(formattedSuppliers.map(s => s.countryCode))].sort();
+        // Filter out invalid country codes
+        const countries = [...new Set(formattedSuppliers
+          .map(s => s.countryCode)
+          .filter(code => code.length === 2))]
+          .sort();
 
         setSuppliers(formattedSuppliers);
         setAvailableCountries(countries);
@@ -114,80 +112,94 @@ const SuppliersPage = () => {
   }
 
   return (
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 2 }}>
+        Our Trusted Suppliers
+      </Typography>
 
+      {/* 🌍 Country Filter */}
+      <FormControl sx={{ minWidth: 200, mb: 4 }}>
+        <InputLabel id="country-select-label">Filter by Country</InputLabel>
+        <Select
+          labelId="country-select-label"
+          value={selectedCountry}
+          label="Filter by Country"
+          onChange={handleCountryChange}
+        >
+          <MenuItem value="">All Countries</MenuItem>
+          {availableCountries.map(code => (
+            <MenuItem key={code} value={code}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <ReactCountryFlag
+                  countryCode={code}
+                  svg
+                  style={{
+                    width: '1.5em',
+                    height: '1.5em',
+                  }}
+                />
+                {code}
+              </Box>
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
 
-      <Container maxWidth="lg" sx={{ py: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 2 }}>
-          Our Trusted Suppliers
-        </Typography>
-
-        {/* 🌍 Country Filter */}
-        <FormControl sx={{ minWidth: 200, mb: 4 }}>
-          <InputLabel id="country-select-label">Filter by Country</InputLabel>
-          <Select
-            labelId="country-select-label"
-            value={selectedCountry}
-            label="Filter by Country"
-            onChange={handleCountryChange}
-          >
-            <MenuItem value="">All Countries</MenuItem>
-            {availableCountries.map(code => (
-              <MenuItem key={code} value={code}>
-                {getFlagEmoji(code)} {code}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-
-        <Grid container spacing={3}>
-          {filteredSuppliers.map((supplier, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                    <Avatar sx={{ bgcolor: 'primary.main', mr: 2 }}>
-                      {supplier.name.charAt(0)}
-                    </Avatar>
-                    <Box>
-                      <Typography variant="h6" component="h2">
-                        {supplier.name}
+      <Grid container spacing={3}>
+        {filteredSuppliers.map((supplier, index) => (
+          <Grid item xs={12} sm={6} md={4} key={index}>
+            <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+              <CardContent sx={{ flexGrow: 1 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                  <Avatar sx={{ bgcolor: 'primary.main', mr: 2 }}>
+                    {supplier.name.charAt(0)}
+                  </Avatar>
+                  <Box>
+                    <Typography variant="h6" component="h2">
+                      {supplier.name}
+                    </Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      {supplier.countryCode && (
+                        <ReactCountryFlag
+                          countryCode={supplier.countryCode}
+                          svg
+                          style={{
+                            width: '1.5em',
+                            height: '1.5em',
+                          }}
+                        />
+                      )}
+                      <Typography variant="body2" color="text.secondary">
+                        {supplier.countryCode}
                       </Typography>
-                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Typography variant="body2" sx={{ mr: 1 }}>
-                          {getFlagEmoji(supplier.countryCode)}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          {supplier.countryCode}
-                        </Typography>
-                      </Box>
                     </Box>
                   </Box>
+                </Box>
 
-                  <Typography variant="body1" paragraph>
-                    {supplier.address}
-                  </Typography>
+                <Typography variant="body1" paragraph>
+                  {supplier.address}
+                </Typography>
 
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 'auto' }}>
-                    <Chip 
-                      label={`${supplier.productCount} products`} 
-                      color="primary" 
-                      size="small" 
-                    />
-                    <Chip 
-                      label={`Rating: ${supplier.rating}`}
-                      color={supplier.rating !== 'N/A' ? 
-                        (supplier.rating >= 4 ? 'success' : 
-                         supplier.rating >= 3 ? 'warning' : 'error') : 'default'}
-                      size="small"
-                    />
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-   
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 'auto' }}>
+                  <Chip 
+                    label={`${supplier.productCount} products`} 
+                    color="primary" 
+                    size="small" 
+                  />
+                  <Chip 
+                    label={`Rating: ${supplier.rating}`}
+                    color={supplier.rating !== 'N/A' ? 
+                      (supplier.rating >= 4 ? 'success' : 
+                       supplier.rating >= 3 ? 'warning' : 'error') : 'default'}
+                    size="small"
+                  />
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
   );
 };
 

@@ -51,12 +51,12 @@ public class GeminiController {
 //                "Produsul căutat este" + prompt;
         // Prepare request payload
 
-//        prompt = "Rol: Asistent designer interior. Caută online produsul: " + prompt +
-//                ". Returnează *doar* JSON brut (fără ```json) cu informații actuale: " +
-//                "trebuie sa arate asa: {produs {nume,pret, poza, furnizor {nume, adresa, contact}} returneaza doar 1 produs " +
-//                "nume furnizor (produs.furnizor.contact) și adresă furnizor (produs.furnizor.adresa). " +
-//                "Verifică existența produsului și a pozei. ASIGURA TE CA DATELE SUNT REALE";
-       // prompt = "Ultimele stiri interesante despre compania " + prompt;
+        prompt = "Rol: Asistent designer interior. Caută online produsul: " + prompt +
+                ". Returnează *doar* JSON brut (fără ```json) cu informații actuale: " +
+                "trebuie sa arate asa: {produs {nume,pret, poza, furnizor {nume, adresa, contact}} returneaza doar 1 produs " +
+                "nume furnizor (produs.furnizor.contact) și adresă furnizor (produs.furnizor.adresa). " +
+                "Verifică existența produsului și a pozei. ASIGURA TE CA DATELE SUNT REALE";
+      //  prompt = "Ultimele stiri interesante despre compania " + prompt;
         String requestBody = "{ \"contents\": [{ \"parts\": [{ \"text\": \""  + prompt + "\" }]}]}";
 
         // Set headers
@@ -152,7 +152,7 @@ public class GeminiController {
     public ResponseEntity<String> generateQuery(@RequestParam String prompt) {
         String url = GEMINI_API_URL + geminiApiKey;
 
-        prompt = "Trebuie sa generezi un cypher din limbaj natural, baza de data este graf este structurata astfel: avem nodurile Produs cu campurile name, si photo, avem nodurile Furnizor cu campurile name si address, iar relatia dintre ele este PROVIDE, pe care se afla price, DECI Furnizor PROVIDE Produs, tu trebuie sa generezi cod CYPHER pentru urmatorul produs " + prompt + " raspunde doar cu codul si nimic altceva";
+        prompt = "Trebuie sa generezi un cypher din limbaj natural, baza de data este graf este structurata astfel: avem nodurile Produs cu campurile name, si photo, avem nodurile Furnizor cu campurile name si address, iar relatia dintre ele este PROVIDE, pe care se afla price, DECI Furnizor PROVIDE Produs, tu trebuie sa generezi cod CYPHER pentru urmatorul produs " + prompt + " raspunde doar cu codul si nimic altceva, limiteaza la 1 produs, tot timpu verifica daca contine macar 1 cuvant care descrie produsul, foloseste toLower ca sa nu fie case sensitive, daca inputul contine numere (de ex canapea 3 persoane/locuri) verifica doar daca exista numarul in produs de exemplu daca utilizatorul cere o canapea de 3 persoane tu trebuie sa returnezi doar MATCH (f:Furnizor)-[r:PROVIDE]->(p:Produs) WHERE toLower(p.name) CONTAINS 'canapea' AND toLower(p.name) CONTAINS '3' RETURN f.name AS Furnizor, f.address AS Adresa p.name AS Produs, p.photo AS Photo, p.url AS URL, r.price AS Pret LIMIT 1 fara sa mai verifici persoane/locuri. daca utilizatorul nu foloseste diacritice atunci fa ca search-ul sa fie bun, daca crezi ca trebuie adauga tu sau fa mai multe incercari la matching name ceva de genul WHERE toLower(REPLACE(REPLACE(REPLACE(p.name, 'ș', 's'), 'ă', 'a'), 'î', 'i')), extinde search-ul si pentru cuvinte in engleza NU UITA DE URL ";
         String requestBody = "{ \"contents\": [{ \"parts\": [{ \"text\": \""  + prompt + "\" }]}]}";
 
         // Set headers

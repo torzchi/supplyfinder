@@ -12,6 +12,7 @@ import Shop from './components/Shop';
 import Homepage from './components/Homepage';
 import SuppliersPage from './components/SuppliersPage';
 import AddProductForm from './components/AddProductForm';
+import AssistantChat from './components/AssistantChat';
 
 const theme = createTheme({
   palette: {
@@ -71,6 +72,7 @@ const App = () => {
             <Route path="home" element={<Homepage />} />
             <Route path="suppliers" element={<SuppliersPage />} />
             <Route path="add-product" element={<AddProductForm />} />
+            <Route path="assistant" element={<AssistantChat />} />
             {/* Optional: 404 catch-all route */}
             <Route path="*" element={<Navigate to="/home" replace />} />
           </Route>
