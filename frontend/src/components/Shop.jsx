@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Container, Grid, Typography } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Header from './Header.jsx';
 import MarketplaceSkeleton from './MarketplaceSkeleton.jsx';
 import FilterPanel from './FilterPanel.jsx';
 import ProductsGrid from './ProductsGrid.jsx';

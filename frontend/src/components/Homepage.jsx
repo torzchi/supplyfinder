@@ -153,7 +153,7 @@ const HomePage = () => {
 
       {/* Supplier News Section */}
       <Container maxWidth="lg" sx={{ mt: 8, mb: 4 }}>
-        <SupplierNews />
+       
       </Container>
 
       {/* Call to Action */}

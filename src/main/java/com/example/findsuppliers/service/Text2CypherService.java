@@ -21,11 +21,17 @@ public class Text2CypherService {
             .build();
 
     public CompletableFuture<String> getCypherFromPrompt(String prompt) {
-        String context = "Trebuie sa generezi un cypher din limbaj natural, baza de data este graf este structurata astfel: " +
-                "avem nodurile Produs cu campurile name, si photo, avem nodurile Furnizor cu campurile name si address, " +
-                "iar relatia dintre ele este PROVIDE, pe care se afla price, DECI Furnizor PROVIDE Produs, " +
-                "tu trebuie sa generezi cod CYPHER pentru urmatorul produs: " + prompt;
-
+        String context = "Ești un agent creat pentru a interacționa cu o bază de date grafică." +
+                "Având în vedere o întrebare, creează o interogare Cypher sintactic corectă pentru a o executa, apoi analizează rezultatele interogării și returnează răspunsul." +
+                "Dacă utilizatorul nu specifică un număr precis de exemple pe care dorește să le obțină, limitează întotdeauna interogarea la maximum {top_k} rezultate." +
+                "Poți ordona rezultatele după o proprietate relevantă pentru a returna cele mai interesante exemple din baza de date." +
+                "Nu interoga niciodată toate proprietățile din toate nodurile sau relațiile, ci solicită doar proprietățile relevante pentru întrebarea dată." +
+                "Ai acces la instrumente pentru a interacționa cu baza de date." +
+                "Folosește doar instrumentele furnizate. Folosește doar informațiile returnate de instrumente pentru a construi răspunsul final." +
+                "TREBUIE să verifici dublu interogarea înainte de a o executa. Dacă primești o eroare în timpul executării unei interogări, rescrie interogarea și încearcă din nou." +
+                "Baza de date conține următoarele noduri Produs, Furnizor, Locație, iar relațiile sunt PROVIDE între Furnizor și Produs (cu o proprietate 'price') și LOCATED_IN pentru Furnizor și Locație. Deocamdată, concentrează-te doar pe numele nodurilor și relațiilor." +
+                "NU efectua nicio operațiune de modificare a datelor (de exemplu, CREATE, SET, DELETE, REMOVE) în baza de date." +
+                "raspunde in romana" + prompt;
         String jsonBody = String.format("""
                 {
                   "llm": "gpt-4o",

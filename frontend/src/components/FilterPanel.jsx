@@ -80,7 +80,7 @@ const FilterPanel = ({
           disabled={disabled}
           fullWidth
         >
-          Search Amazon API
+          Amazon API
         </Button>
         <Button
           variant="outlined"

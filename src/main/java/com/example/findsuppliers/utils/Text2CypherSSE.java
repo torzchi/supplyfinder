@@ -21,7 +21,7 @@ public class Text2CypherSSE {
                     "llm": "gpt-4o",
                     "database": "recommendations",
                     "workflow": "text2cypher_with_1_retry_and_output_check",
-                    "context": "Graful meu are urmatoarele noduri: Produs, Furnizor si legatura dintre ele, Furnizor PROVIDE Produs, pe aceasta relatie se afla pretul, vreau un scaun de bucatarie"
+                    "context": "Graful are 3 tipuri de noduri: Produs care are urmatoarele proprietati name, photo, category, and URL, Furnizor care are proprietatile address, contact, and name and Locatie cu proprietate country, Furnizor este legat de Produs prin relationship-ul PROVIDE, cu proprietatea price, tradu limbajul natural intr-un query pentru baza graph - aceasta este cerinta utilizatorului"
                 }
                 """;
 

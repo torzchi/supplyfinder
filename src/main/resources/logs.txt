@@ -3684,3 +3684,241 @@ Ai nevoie de mai multe informații despre sifoniere? Poți fi mai specific(ă) �
 }
 ``` 2025-06-03T12:53:55.828934700
 -------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+MATCH (f:Furnizor)-[r:PROVIDE]->(p:Produs)
+WHERE toLower(p.name) CONTAINS 'canapea' AND toLower(p.name) CONTAINS '3'
+RETURN f.name AS Furnizor, f.address AS Adresa, p.name AS Produs, p.photo AS Photo, p.url AS URL, r.price AS Pret
+LIMIT 1 2025-06-15T20:15:01.282580400
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+MATCH (f:Furnizor)-[r:PROVIDE]->(p:Produs)
+WHERE toLower(p.name) CONTAINS 'scaun' AND toLower(p.name) CONTAINS 'lemn'
+RETURN f.name AS Furnizor, f.address AS Adresa, p.name AS Produs, p.photo AS Photo, p.url AS URL, r.price AS Pret
+LIMIT 1 2025-06-15T20:15:10.071670300
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+MATCH (f:Furnizor)-[r:PROVIDE]->(p:Produs)
+WHERE toLower(p.name) CONTAINS 'scaun' AND toLower(p.name) CONTAINS 'copii'
+RETURN f.name AS Furnizor, f.address AS Adresa, p.name AS Produs, p.photo AS Photo, p.url AS URL, r.price AS Pret
+LIMIT 1 2025-06-15T20:15:20.153503900
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+MATCH (f:Furnizor)-[r:PROVIDE]->(p:Produs)
+WHERE toLower(p.name) CONTAINS 'copii'
+RETURN f.name AS Furnizor, f.address AS Adresa, p.name AS Produs, p.photo AS Photo, p.url AS URL, r.price AS Pret
+LIMIT 1 2025-06-15T20:15:35.005220100
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+MATCH (f:Furnizor)-[r:PROVIDE]->(p:Produs)
+WHERE toLower(REPLACE(REPLACE(REPLACE(p.name, 'ș', 's'), 'ă', 'a'), 'î', 'i')) CONTAINS 'canapea'
+  AND r.price < 3000
+RETURN f.name AS Furnizor, f.address AS Adresa, p.name AS Produs, p.photo AS Photo, p.url AS URL, r.price AS Pret
+LIMIT 1 2025-06-15T20:15:56.713893600
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+MATCH (f:Furnizor)-[r:PROVIDE]->(p:Produs)
+WHERE toLower(REPLACE(REPLACE(REPLACE(p.name, 'ș', 's'), 'ă', 'a'), 'î', 'i')) CONTAINS 'canapea'
+  AND r.price < 3000
+RETURN f.name AS Furnizor, f.address AS Adresa, p.name AS Produs, p.photo AS Photo, p.url AS URL, r.price AS Pret
+LIMIT 1 2025-06-15T20:21:48.103495200
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+MATCH (f:Furnizor)-[r:PROVIDE]->(p:Produs)
+WHERE toLower(REPLACE(REPLACE(REPLACE(p.name, 'ș', 's'), 'ă', 'a'), 'î', 'i')) CONTAINS 'usa' AND r.price < 1500
+RETURN f.name AS Furnizor, f.address AS Adresa, p.name AS Produs, p.photo AS Photo, p.url AS URL, r.price AS Pret
+LIMIT 1 2025-06-15T20:22:04.296415500
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+MATCH (f:Furnizor)-[r:PROVIDE]->(p:Produs)
+WHERE toLower(p.name) CONTAINS 'perna'
+  AND toFloat(r.price) < 1000
+RETURN f.name AS Furnizor,
+       f.address AS Adresa,
+       p.name AS Produs,
+       p.photo AS Photo,
+       p.url AS URL,
+       r.price AS Pret
+LIMIT 1 2025-06-15T20:28:03.871082900
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+MATCH (f:Furnizor)-[r:PROVIDE]->(p:Produs)
+WHERE toLower(p.name) CONTAINS 'canapea' AND toFloat(r.price) < 2000.0
+RETURN f.name AS Furnizor, f.address AS Adresa, p.name AS Produs, p.photo AS Photo, p.url AS URL, r.price AS Pret
+LIMIT 1 2025-06-15T20:28:25.542971600
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+MATCH (f:Furnizor)-[r:PROVIDE]->(p:Produs)
+WHERE toLower(p.name) CONTAINS 'usa' AND toFloat(r.price) > 100.0
+RETURN f.name AS Furnizor, f.address AS Adresa, p.name AS Produs, p.photo AS Photo, p.url AS URL, r.price AS Pret
+LIMIT 1 2025-06-15T20:28:38.933208300
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+MATCH (f:Furnizor)-[r:PROVIDE]->(p:Produs)
+WHERE toLower(p.name) CONTAINS 'taburet'
+RETURN f.name AS Furnizor, f.address AS Adresa, p.name AS Produs, p.photo AS Photo, p.url AS URL, toFloat(r.price) AS Pret
+LIMIT 1 2025-06-15T20:28:49.806812
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+MATCH (f:Furnizor)-[r:PROVIDE]->(p:Produs)
+WHERE 
+    toLower(p.name) CONTAINS toLower($produs) OR
+    toLower(REPLACE(REPLACE(REPLACE(p.name, 'ș', 's'), 'ă', 'a'), 'î', 'i')) CONTAINS toLower($produs) OR
+    toLower(p.name) CONTAINS toLower(REPLACE(REPLACE(REPLACE($produs, 'ș', 's'), 'ă', 'a'), 'î', 'i')) OR
+    toLower(REPLACE(REPLACE(REPLACE(p.name, 'ș', 's'), 'ă', 'a'), 'î', 'i')) CONTAINS toLower(REPLACE(REPLACE(REPLACE($produs, 'ș', 's'), 'ă', 'a'), 'î', 'i'))
+RETURN f.name AS Furnizor, f.address AS Adresa, p.name AS Produs, p.photo AS Photo, p.url AS URL, toFloat(r.price) AS Pret
+LIMIT 1 2025-06-15T20:29:16.717249900
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+MATCH (f:Furnizor)-[r:PROVIDE]->(p:Produs)
+WHERE toLower(p.name) CONTAINS 'birou'
+RETURN f.name AS Furnizor, f.address AS Adresa, p.name AS Produs, p.photo AS Photo, p.url AS URL, toFloat(r.price) AS Pret
+LIMIT 1 2025-06-15T20:29:43.654002
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+MATCH (f:Furnizor)-[r:PROVIDE]->(p:Produs)
+WHERE toLower(p.name) CONTAINS 'birou' AND toLower(p.name) CONTAINS 'gaming' AND toLower(p.name) CONTAINS 'led'
+RETURN f.name AS Furnizor, f.address AS Adresa, p.name AS Produs, p.photo AS Photo, p.url AS URL, toFloat(r.price) AS Pret
+LIMIT 1 2025-06-15T20:30:02.607286400
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "produs": {
+    "nume": "Scaun de birou ergonomic Herman Miller Aeron",
+    "pret": 1499.99,
+    "poza": "https://store.hermanmiller.com/dw/image/v2/BBBB_PRD/on/demandware.static/-/Sites-hermanmiller-master/default/dw35ba83a6/images/hi-res/herman-miller/aeron_chair/2195257-hm.jpg?sw=1200&sh=1200&sm=fit",
+    "furnizor": {
+      "nume": "Herman Miller",
+      "adresa": "855 E Main Ave, Zeeland, MI 49464, SUA",
+      "contact": "+18884437626"
+    }
+  }
+}
+``` 2025-06-28T14:58:10.505693500
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-06-28T15:09:38.028631200
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+{"rating": 75} 2025-06-28T16:16:02.960489300
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-06-28T16:16:08.723459300
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 90
+}
+``` 2025-06-28T16:16:14.359895400
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 60
+}
+``` 2025-06-28T16:16:19.901719200
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 75
+}
+``` 2025-06-28T16:16:25.445373
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-06-28T16:16:43.531969100
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 90
+}
+``` 2025-06-28T16:16:49.240314700
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 85
+}
+``` 2025-06-28T16:16:54.795865100
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 60
+}
+``` 2025-06-28T16:17:00.387126400
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "rating": 75
+}
+``` 2025-06-28T16:17:05.995434300
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "produs": {
+    "nume": "Scaun de birou ergonomic Markus",
+    "pret": 799.00,
+    "poza": "https://www.ikea.com/ro/ro/images/products/markus-scaun-de-birou-vissle-gri-inchis__0724714_pe734537_s5.jpg?f=xl",
+    "furnizor": {
+      "nume": "IKEA",
+      "adresa": "Bulevardul Theodor Pallady 51N, București 032258",
+      "contact": "+40 21 269 0900"
+    }
+  }
+}
+``` 2025-06-29T18:53:57.062021700
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+MATCH (f:Furnizor)-[r:PROVIDE]->(p:Produs)
+WHERE toLower(p.name) CONTAINS 'masa' AND toLower(p.name) CONTAINS 'lemn'
+RETURN f.name AS Furnizor, f.address AS Adresa, p.name AS Produs, p.photo AS Photo, p.url AS URL, toFloat(r.price) AS Pret
+LIMIT 1 2025-06-29T18:54:33.665286300
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+```json
+{
+  "produs": {
+    "nume": "Scaun de birou ergonomic OFF 302",
+    "pret": 349.99,
+    "poza": "https://www.scaune-online.ro/image/cache/catalog/produse/scaune-birou/off-302/scaun-birou-ergonomic-off-302-negru-1-800x800.jpg",
+    "furnizor": {
+      "nume": "Scaune Online",
+      "adresa": "Str. Tudor Vladimirescu nr. 23, Sector 5, Bucuresti",
+      "contact": "0722.555.444"
+    }
+  }
+}
+``` 2025-06-30T19:21:31.231003400
+-------------------------------------------------------------------- 
+-------------------------------------------------------------------- 
+MATCH (f:Furnizor)-[r:PROVIDE]->(p:Produs)
+WHERE toLower(p.name) CONTAINS toLower($produs) OR
+      toLower(p.name) CONTAINS toLower(REPLACE(REPLACE(REPLACE($produs, 'ș', 's'), 'ă', 'a'), 'î', 'i')) OR
+      toLower(p.name) CONTAINS toLower(REPLACE(REPLACE(REPLACE($produs, 'ş', 's'), 'ă', 'a'), 'î', 'i')) OR
+      toLower(p.name) CONTAINS toLower($produs_en)
+
+RETURN f.name AS Furnizor,
+       f.address AS Adresa,
+       p.name AS Produs,
+       p.photo AS Photo,
+       p.url AS URL,
+       toFloat(r.price) AS Pret
+LIMIT 1 2025-06-30T19:24:56.755005500
+-------------------------------------------------------------------- 
