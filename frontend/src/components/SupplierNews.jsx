@@ -87,9 +87,29 @@ const SupplierNews = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/news/jysk');
+        // Cypher query to get all Stire nodes, sorted by date, limited to 5 most recent
+        const cypherQuery = `MATCH (s:Stire) RETURN s.id as id, s.date as date, s.name as name, s.rating as rating, s.link as link, s.icon as icon, s.source as source ORDER BY s.date DESC LIMIT 5`;
+
+        const response = await fetch('http://localhost:8080/api/cypher/execute', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: cypherQuery,
+        });
+
         const data = await response.json();
-        setNews(data);
+        
+        // Transform the data to match the expected format
+        const transformedNews = data.map(item => ({
+          id: item.id,
+          date: item.date,
+          title: item.name, // map 'name' to 'title' for compatibility
+          rating: item.rating,
+          link: item.link,
+          icon: item.icon,
+          source: item.source
+        }));
+
+        setNews(transformedNews);
       } catch (error) {
         console.error('Error fetching news:', error);
       }

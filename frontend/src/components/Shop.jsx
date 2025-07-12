@@ -260,7 +260,7 @@ const FurnitureMarketplace = () => {
       const newProduct = {
         id: Date.now(), // Temporary ID
         name: produs.nume,
-        imageUrl: '/chair.jpg' || produs.imagine,
+        imageUrl: '/notFound.png' || produs.imagine,
         climateFriendly: false,
         category: getCategoryFromName(produs.nume),
         suppliers: [

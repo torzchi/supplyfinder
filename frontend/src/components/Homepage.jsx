@@ -17,35 +17,35 @@ import SupplierNews from './SupplierNews';
 // Sample category data with image URLs
 const mainCategories = [
   {
-    name: 'Sofa',
+    name: 'Canapea',
     imageUrl: '/sofa.jpg',
-    description: 'Comfortable seating for your living room',
+    description: 'Comfortabile pentru odihna de zi cu zi',
     featured: true
   },
   {
-    name: 'Chair',
+    name: 'Scaun',
     imageUrl: '/chair.jpg',
-    description: 'Stylish seating options for every space'
+    description: 'Opțiuni de scaune elegante pentru fiecare spațiu'
   },
   {
-    name: 'Table',
+    name: 'Masa',
     imageUrl: '/table.jpg',
-    description: 'Dining and coffee tables for your home'
+    description: 'Mese de sufragerie și de cafea pentru casa ta'
   },
   {
-    name: 'Bed',
+    name: 'Pat',
     imageUrl: '/bed.jpg',
-    description: 'Rest and relax with our comfortable beds'
+    description: 'Ofera odihna si relaxare'
   },
   {
-    name: 'Desk',
+    name: 'Birou',
     imageUrl: '/desk.jpg',
-    description: 'Spacious desks for storage'
+    description: 'Birouri spatioase pentru stocare'
   },
   {
-    name: 'Shelf',
+    name: 'Raft',
     imageUrl: '/shelf.jpg',
-    description: 'Cabinets and shelves for organization'
+    description: 'Rafturi pentru organizare'
   }
 ];
 
@@ -77,10 +77,10 @@ const HomePage = () => {
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
               <Typography variant="h2" component="h1" fontWeight="bold" gutterBottom>
-                Modern Furniture for Modern Living
+                Descopera produsele oferite 
               </Typography>
               <Typography variant="h5" paragraph sx={{ mb: 4 }}>
-                Find the perfect pieces for your home with our curated selection
+                Vizualizeaza toate produsele de la furnizorii tai preferati
               </Typography>
               <Button
                 variant="contained"
@@ -94,7 +94,7 @@ const HomePage = () => {
                   boxShadow: theme.shadows[4]
                 }}
               >
-                Shop All Products
+                 Catalog produse
               </Button>
             </Grid>
           </Grid>
@@ -104,10 +104,10 @@ const HomePage = () => {
       {/* Featured Category Section */}
       <Container maxWidth="lg" sx={{ mt: 8, mb: 4 }}>
         <Typography variant="h4" component="h2" fontWeight="bold" gutterBottom>
-          Featured Categories
+        Cauta dupa categoriile populare
         </Typography>
         <Typography variant="body1" color="text.secondary" paragraph>
-          Browse our most popular furniture collections
+          
         </Typography>
 
         <Grid container spacing={4} sx={{ mt: 2 }}>
@@ -153,28 +153,11 @@ const HomePage = () => {
 
       {/* Supplier News Section */}
       <Container maxWidth="lg" sx={{ mt: 8, mb: 4 }}>
-       
+        <SupplierNews />
       </Container>
 
       {/* Call to Action */}
-      <Box sx={{ bgcolor: 'grey.100', py: 6, mt: 6 }}>
-        <Container maxWidth="md" sx={{ textAlign: 'center' }}>
-          <Typography variant="h4" component="h2" gutterBottom>
-            Find the perfect furniture for your home
-          </Typography>
-          <Typography variant="body1" paragraph sx={{ mb: 4 }}>
-            Browse our extensive collection of high-quality furniture from trusted suppliers
-          </Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            onClick={() => navigate('/shop')}
-          >
-            Explore All Products
-          </Button>
-        </Container>
-      </Box>
+      
     </Box>
   );
 };

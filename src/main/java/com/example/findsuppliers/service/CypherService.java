@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class CypherService {
@@ -30,5 +31,12 @@ public class CypherService {
         } catch (Exception e) {
             throw new RuntimeException("Error executing query: " + e.getMessage(), e);
         }
+    }
+
+    public List<String> getAllFurnizorNames() {
+        List<Map<String, Object>> result = executeQuery("MATCH (f:Furnizor) RETURN f.name AS name");
+        return result.stream()
+                .map(r -> r.get("name").toString())
+                .collect(Collectors.toList());
     }
 }

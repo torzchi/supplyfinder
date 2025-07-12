@@ -1,6 +1,7 @@
 package com.example.findsuppliers.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -20,12 +21,15 @@ public class NewsService {
     private final WebClient ratingClient;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    @Autowired
+    private CypherService cypherService;
+
     @Value("${news.api.key}")
     private String apiKey;
 
     public NewsService(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder.baseUrl("https://serpapi.com").build();
-        this.ratingClient = webClientBuilder.baseUrl("http://localhost:8080").build(); // Adjust if deployed elsewhere
+        this.ratingClient = webClientBuilder.baseUrl("http://localhost:8080").build();
     }
 
     public Mono<List<Map<String, Object>>> fetchNews(String query) {
@@ -60,11 +64,11 @@ public class NewsService {
                             .collect(Collectors.toList());
 
                     return Flux.fromIterable(topArticles)
-                            .concatMap(article -> Mono.delay(Duration.ofSeconds(5)) // Delay between rating calls
+                            .concatMap(article -> Mono.delay(Duration.ofSeconds(5))
                                     .then(rateTitle(article.get("title").toString()))
                                     .map(rating -> {
                                         Map<String, Object> filtered = new HashMap<>();
-                                        filtered.put("title", article.get("title"));
+                                        filtered.put("name", article.get("title")); // ← title becomes name
                                         Map<String, Object> source = (Map<String, Object>) article.get("source");
                                         if (source != null) {
                                             filtered.put("source", source.get("name"));
@@ -73,10 +77,51 @@ public class NewsService {
                                         filtered.put("link", article.get("link"));
                                         filtered.put("date", article.get("date"));
                                         filtered.put("rating", rating);
+
+                                        saveToNeo4j(filtered);
                                         return filtered;
                                     }));
                 })
                 .collectList();
+    }
+
+    private void saveToNeo4j(Map<String, Object> article) {
+        // Save the Stire node
+        String createStire = String.format("""
+                MERGE (s:Stire {link: '%s'})
+                SET s.name = '%s',
+                    s.source = '%s',
+                    s.icon = '%s',
+                    s.date = '%s',
+                    s.rating = %s
+                """,
+                escape((String) article.get("link")),
+                escape(article.get("name").toString()),
+                escape(article.getOrDefault("source", "").toString()),
+                escape(article.getOrDefault("icon", "").toString()),
+                escape(article.get("date").toString()),
+                article.get("rating").toString()
+        );
+        cypherService.executeQuery(createStire);
+
+        // Get all Furnizor names
+        List<Map<String, Object>> furnizors = cypherService.executeQuery("MATCH (f:Furnizor) RETURN f.name AS name");
+        String stireName = article.get("name").toString().toLowerCase();
+
+        for (Map<String, Object> furnizor : furnizors) {
+            String furnizorName = furnizor.get("name").toString();
+            if (stireName.contains(furnizorName.toLowerCase())) {
+                String relateQuery = String.format("""
+                        MATCH (f:Furnizor {name: '%s'})
+                        MATCH (s:Stire {link: '%s'})
+                        MERGE (f)-[:MENTIONED_IN]->(s)
+                        """,
+                        escape(furnizorName),
+                        escape(article.get("link").toString())
+                );
+                cypherService.executeQuery(relateQuery);
+            }
+        }
     }
 
     private Mono<Double> rateTitle(String title) {
@@ -93,10 +138,7 @@ public class NewsService {
 
     private Double extractRatingFromJson(String json) {
         try {
-            // Remove markdown formatting like ```json and ```
             json = json.replaceAll("(?s)```json|```", "").trim();
-
-            // Extract only the portion that looks like a JSON object
             int start = json.indexOf("{");
             int end = json.lastIndexOf("}") + 1;
             if (start >= 0 && end > start) {
@@ -115,5 +157,8 @@ public class NewsService {
         }
         return 0.0;
     }
-}
 
+    private String escape(String input) {
+        return input.replace("'", "\\'");
+    }
+}
